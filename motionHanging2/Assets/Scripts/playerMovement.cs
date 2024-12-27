@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class playerMovement : MonoBehaviour
@@ -18,6 +20,7 @@ public class playerMovement : MonoBehaviour
     // Movement
     public float moveSpeed = 4500;
     public float maxSpeed = 20;
+    //public float wallrunSpeed = 17.5;
     public bool grounded;
     public LayerMask whatIsGround;
 
