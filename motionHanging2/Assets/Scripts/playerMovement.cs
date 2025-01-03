@@ -11,6 +11,7 @@ public class playerMovement : MonoBehaviour
 
     // Other
     private Rigidbody rb;
+    public bool wallrunning;
 
     // Rotation and looking
     private float xRotation;

@@ -42,6 +42,14 @@ public class Movement : MonoBehaviour
     public float wallJumpUpForce = 5f; // vertical jump force
     public float wallJumpAwayForce = 5f; // push off from wall 
 
+    [Header("Sliding/crouching")]
+    private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
+    private Vector3 playerScale;
+    private bool isCrouching = false;
+    public float slideForce = 400;
+    public float slideCounterMovement = 0.2f;
+    
+
     [Space]
     public LayerMask wallrunlayer;
     public float wallRunCheckRange = 1f;
@@ -119,6 +127,7 @@ public class Movement : MonoBehaviour
     {
         if (groundCheck != null)
             groundCheck.transform.localPosition = new Vector3(0f, -0.95f, 0f);
+        playerScale = transform.localScale;
     }
 
     private void Update()
@@ -128,36 +137,51 @@ public class Movement : MonoBehaviour
         vertical = Input.GetAxisRaw("Vertical");
         horizontal = Input.GetAxisRaw("Horizontal");
         jump = Input.GetKey(KeyCode.Space);
-
+        
+        //crouch input test
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+            StartCrouch();
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+            StopCrouch();
         GroundCheck();
     }
 
-    private void FixedUpdate()
+private void FixedUpdate()
+{
+    rb.drag = grounded ? groundDrag : airDrag;
+
+    if (readyToJump && jump && (grounded || isWallrunning))
+        Jump();
+
+    if (useWallrun)
+        CheckWallRun();
+
+    if (isWallrunning)
     {
-        rb.drag = grounded ? groundDrag : airDrag;
+        // Calculate wallrun direction (cross product for perpendicular movement along the wall)
+        Vector3 wallRunDirection = Vector3.Cross(wallNormal, Vector3.up).normalized;
 
-        if (readyToJump && jump && (grounded || isWallrunning))
-            Jump();
+        // Move the player along the wall
+        rb.AddForce(wallRunDirection * speed * Time.fixedDeltaTime, ForceMode.Acceleration);
 
-        if (useWallrun)
-            CheckWallRun();
-
-        if (isWallrunning && vertical == 1)
+        // Optionally add upward force for smoother wallrunning
+        if (vertical > 0)
         {
-            rb.AddForce(look.up * (wallRunUp * Time.fixedDeltaTime), ForceMode.Impulse);
+            rb.AddForce(Vector3.up * wallRunUp * Time.fixedDeltaTime, ForceMode.Force);
         }
-
-        if (vertical == 0 && horizontal == 0)
-            return;
-
-        float multi = grounded ? 1f : airMovement;
-        if (isWallrunning) multi = wallRunMovementMulti;
-
-        Vector3 moveDirection = look.forward * (vertical * speed * Time.fixedDeltaTime * multi) +
-                                 look.right * (horizontal * speed * Time.fixedDeltaTime * multi);
-
-        rb.AddForce(moveDirection, ForceMode.Impulse);
     }
+
+    if (vertical == 0 && horizontal == 0)
+        return;
+
+    float multi = grounded ? 1f : airMovement;
+    if (isWallrunning) multi = wallRunMovementMulti;
+        Vector3 moveDirection = look.forward * (vertical * speed * Time.fixedDeltaTime * multi) + look.right * (horizontal * speed * Time.fixedDeltaTime * multi);
+
+rb.AddForce(moveDirection, ForceMode.Acceleration);
+}
+
+
 
     private void Look()
     {
@@ -225,6 +249,35 @@ public class Movement : MonoBehaviour
     }
 
     private void ResetJump() => readyToJump = true;
+   
+    private void StartCrouch()
+    {
+        float magnitude = rb.velocity.magnitude;
+        transform.localScale = crouchScale;
+        transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+        if (rb.velocity.magnitude > 0.5f)
+        {
+            if (grounded)
+            {
+                rb.AddForce(transform.forward * slideForce);
+            }
+        }
+    if (isCrouching) return;
+    
+    isCrouching = true;
+    transform.localScale = crouchScale;
+    }
+
+    private void StopCrouch()
+    {
+        transform.localScale = playerScale;
+        transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+
+    if (!isCrouching) return;
+    
+    isCrouching = false;
+    transform.localScale = playerScale;
+    }
 
 private void CheckWallRun()
 {
