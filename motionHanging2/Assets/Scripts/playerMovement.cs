@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class playerMovement : MonoBehaviour
 {   
     [Header("Assignables")]
     //Assignables
@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
 	private int nw;
     
     //Instance
-	public static PlayerMovement Instance { get; private set; }
+	public static playerMovement Instance { get; private set; }
 
 	private void Awake()
 	{
