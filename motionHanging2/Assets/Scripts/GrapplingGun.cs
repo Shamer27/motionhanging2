@@ -40,10 +40,7 @@ public class GrapplingGun : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable))
 
-            if (grapplePoint != whatIsGrappleable)
-            {
-                Destroy(joint);
-            }
+
         {
             grapplePoint = hit.point;
             joint = player.gameObject.AddComponent<SpringJoint>();

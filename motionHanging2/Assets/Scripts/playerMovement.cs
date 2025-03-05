@@ -75,6 +75,9 @@ public class playerMovement : MonoBehaviour
 
     //Private int
 	private int nw;
+
+	//Testing vars
+	private float timeOnWall = 0.0f;
     
     //Instance
 	public static playerMovement Instance { get; private set; }
@@ -115,6 +118,16 @@ public class playerMovement : MonoBehaviour
 		MyInput();
         //Looking around
 		Look();
+
+		if (onwall)
+		{
+			timeOnWall += Time.deltaTime;
+			if (timeOnWall > 0.5f)
+			{
+				StopWall();
+				
+			}
+		}
 	}
 
     //Player input
@@ -250,7 +263,7 @@ public class playerMovement : MonoBehaviour
 		    }
 		    if (wallRunning)
 		    {
-			    rb.AddForce(wallNormalVector * jumpForce * 3f);
+			    rb.AddForce(wallNormalVector * jumpForce * 2f);
 		    }
 		    Invoke("ResetJump", jumpCooldown);
 		    if (wallRunning)
@@ -427,8 +440,11 @@ public class playerMovement : MonoBehaviour
 	}
 
 	private void OnCollisionStay(Collision other)
+	
 	{
+		
 		int layer = other.gameObject.layer;
+		
 		if ((int)whatIsGround != ((int)whatIsGround | (1 << layer)))
 		{
 			return;
@@ -448,11 +464,12 @@ public class playerMovement : MonoBehaviour
 				CancelInvoke("StopGrounded");
 			}
 			if (IsWall(normal) && layer == LayerMask.NameToLayer("wallrun"))
+				Debug.Log("On wall:");
 			{
 				StartWallRun(normal);
 				onWall = true;
 				cancellingWall = false;
-				CancelInvoke("StopWall");
+				// CancelInvoke("StopWall");
 			}
 			if (IsSurf(normal))
 			{
@@ -487,6 +504,7 @@ public class playerMovement : MonoBehaviour
 
 	private void StopWall()
 	{
+		timeOnWall = 0.0f;
 		onWall = false;
 		wallRunning = false;
 	}
