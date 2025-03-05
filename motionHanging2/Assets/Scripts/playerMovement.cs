@@ -25,6 +25,11 @@ public class playerMovement : MonoBehaviour
 	public bool grounded;
 	public bool onWall;
 
+	[Header("Wall Running Settings")]
+	[SerializeField] private float wallRunLiftForce = 100f;
+	[SerializeField] private float wallRunDuration = 0.5f;
+	[SerializeField] private float wallRunJumpBoost = 10f;
+
     //Private Floats
     private float wallRunGravity = 1f;
 	private float maxSlopeAngle = 35f;
@@ -78,6 +83,8 @@ public class playerMovement : MonoBehaviour
 
 	//Testing vars
 	private float timeOnWall = 0.0f;
+	public bool hasWallJumped = false;
+
     
     //Instance
 	public static playerMovement Instance { get; private set; }
@@ -119,15 +126,15 @@ public class playerMovement : MonoBehaviour
         //Looking around
 		Look();
 
-		if (onWall)
-		{
-			timeOnWall += Time.deltaTime;
-			if (timeOnWall > 0.5f)
-			{
-				StopWall();
+	// 	if (onWall)
+	// 	{
+	// 		timeOnWall += Time.deltaTime;
+	// 		if (timeOnWall > 0.5f)
+	// 		{
+	// 			StopWall();
 				
-			}
-		}
+	// 		}
+	// 	}
 	}
 
     //Player input
@@ -244,34 +251,66 @@ public class playerMovement : MonoBehaviour
 	}
 
     //Player go fly
+	// private void Jump()
+	// {
+    //     if ((grounded || wallRunning || surfing) && readyToJump)
+	// 	{
+	// 	    MonoBehaviour.print("jumping");
+	// 	    Vector3 velocity = rb.velocity;
+	// 	    readyToJump = false;
+	// 	    rb.AddForce(Vector2.up * jumpForce * 1.5f);
+	// 	    rb.AddForce(normalVector * jumpForce * 0.5f);
+	// 	    if (rb.velocity.y < 0.5f)
+	// 	    {
+	// 		    rb.velocity = new Vector3(velocity.x, 0f, velocity.z);
+	// 	    }
+	// 	    else if (rb.velocity.y > 0f)
+	// 	    {
+	// 		    rb.velocity = new Vector3(velocity.x, velocity.y / 2f, velocity.z);
+	// 	    }
+	// 	    if (wallRunning)
+	// 	    {
+	// 		    rb.AddForce(wallNormalVector * jumpForce * 0.05f);
+	// 			wallRunning = false; // Ensure wallRunning is set to false after jumping
+	// 	    }
+	// 	    Invoke("ResetJump", jumpCooldown);
+    //     }
+	// }
+
 	private void Jump()
 	{
-        if ((grounded || wallRunning || surfing) && readyToJump)
+		if ((grounded || wallRunning || surfing) && readyToJump)
 		{
-		    MonoBehaviour.print("jumping");
-		    Vector3 velocity = rb.velocity;
-		    readyToJump = false;
-		    rb.AddForce(Vector2.up * jumpForce * 1.5f);
-		    rb.AddForce(normalVector * jumpForce * 0.5f);
-		    if (rb.velocity.y < 0.5f)
-		    {
-			    rb.velocity = new Vector3(velocity.x, 0f, velocity.z);
-		    }
-		    else if (rb.velocity.y > 0f)
-		    {
-			    rb.velocity = new Vector3(velocity.x, velocity.y / 2f, velocity.z);
-		    }
-		    if (wallRunning)
-		    {
-			    rb.AddForce(wallNormalVector * jumpForce * 2f);
-		    }
-		    Invoke("ResetJump", jumpCooldown);
-		    if (wallRunning)
-		    {
-			    wallRunning = false;
-		    }
-        }
+			if (wallRunning && hasWallJumped) return; // Prevent multiple wall jumps
+
+			Vector3 velocity = rb.velocity;
+			readyToJump = false;
+			rb.AddForce(Vector2.up * jumpForce * 1.5f);
+			rb.AddForce(normalVector * jumpForce * 0.5f);
+
+			if (rb.velocity.y < 0.5f)
+			{
+				rb.velocity = new Vector3(velocity.x, 0f, velocity.z);
+			}
+			else if (rb.velocity.y > 0f)
+			{
+				rb.velocity = new Vector3(velocity.x, velocity.y / 2f, velocity.z);
+			}
+
+			if (wallRunning)
+			{
+				hasWallJumped = true;  // Set flag when jumping from a wall
+				rb.AddForce(wallNormalVector * jumpForce * 0.05f);
+				wallRunning = false; // Exit wall-running state after jumping
+			}
+
+			Invoke("ResetJump", jumpCooldown);
+		}
 	}
+
+
+
+// Ensure we reset hasWallJumped when the player lands on the ground
 
     //Looking around by using your mouse
 	private void Look()
@@ -327,62 +366,32 @@ public class playerMovement : MonoBehaviour
 		return new Vector2(y: magnitude * Mathf.Cos(num * ((float)Math.PI / 180f)), x: magnitude * Mathf.Cos(num2 * ((float)Math.PI / 180f)));
 	}
 
-	private void FindWallRunRotation()
-	{
-		if (!wallRunning)
+		private void FindWallRunRotation()
 		{
-			wallRunRotation = 0f;
-			return;
-		}
-		_ = new Vector3(0f, playerCam.transform.rotation.y, 0f).normalized;
-		new Vector3(0f, 0f, 1f);
-		float num = 0f;
-		float current = playerCam.transform.rotation.eulerAngles.y;
-		if (Math.Abs(wallNormalVector.x - 1f) < 0.1f)
-		{
-			num = 90f;
-		}
-		else if (Math.Abs(wallNormalVector.x - -1f) < 0.1f)
-		{
-			num = 270f;
-		}
-		else if (Math.Abs(wallNormalVector.z - 1f) < 0.1f)
-		{
-			num = 0f;
-		}
-		else if (Math.Abs(wallNormalVector.z - -1f) < 0.1f)
-		{
-			num = 180f;
-		}
-		num = Vector3.SignedAngle(new Vector3(0f, 0f, 1f), wallNormalVector, Vector3.up);
-		float num2 = Mathf.DeltaAngle(current, num);
-		wallRunRotation = (0f - num2 / 90f) * 15f;
-		if (!readyToWallrun)
-		{
-			return;
-		}
-		if ((Mathf.Abs(wallRunRotation) < 4f && y > 0f && Math.Abs(x) < 0.1f) || (Mathf.Abs(wallRunRotation) > 22f && y < 0f && Math.Abs(x) < 0.1f))
-		{
-			if (!cancelling)
+			if (!wallRunning)
 			{
-				cancelling = true;
-				CancelInvoke("CancelWallrun");
-				Invoke("CancelWallrun", 0.2f);
+				wallRunRotation = 0f;
+				return;
 			}
+
+			float current = playerCam.transform.rotation.eulerAngles.y;
+			float target = Vector3.SignedAngle(Vector3.forward, wallNormalVector, Vector3.up);
+			float deltaAngle = Mathf.DeltaAngle(current, target);
+
+			wallRunRotation = (0f - deltaAngle / 90f) * 15f;
+
+			// Smoothly apply the rotation
+			actualWallRotation = Mathf.SmoothDamp(actualWallRotation, wallRunRotation, ref wallRotationVel, 0.2f);
+			playerCam.transform.localRotation = Quaternion.Euler(xRotation, desiredX, actualWallRotation);
 		}
-		else
-		{
-			cancelling = false;
-			CancelInvoke("CancelWallrun");
-		}
-	}
 
 	private void CancelWallrun()
 	{
 		MonoBehaviour.print("cancelled");
 		Invoke("GetReadyToWallrun", 0.1f);
-		rb.AddForce(wallNormalVector * 600f);
+		rb.AddForce(wallNormalVector * 300f + Vector3.up * 1f, ForceMode.Impulse);
 		readyToWallrun = false;
+		readyToJump = true; // Allow jumping after exiting wall run
 	}
 
 	private void GetReadyToWallrun()
@@ -394,15 +403,21 @@ public class playerMovement : MonoBehaviour
 	{
 		if (wallRunning)
 		{
+			Debug.Log("Wall Running");
+			readyToJump = true;
 			timeOnWall += Time.deltaTime;
 
+			// Apply forces for wall-running
 			rb.AddForce(-wallNormalVector * Time.deltaTime * moveSpeed);
-
-			float wallRunLift = Mathf.Clamp(Mathf.Lerp(100f, 10f, timeOnWall / 0.5f), 0f, 50f);
+			float wallRunLift = Mathf.Clamp(Mathf.Lerp(100f, 10f, timeOnWall / wallRunDuration), 0f, 50f);
 			rb.AddForce(Vector3.up * Time.deltaTime * rb.mass * 100f * wallRunLift);
-		
 			rb.AddForce(orientation.transform.forward * Time.deltaTime * moveSpeed * 2f);
-			rb.AddForce(Vector3.down * Time.deltaTime * rb.mass * 10f);
+
+			// Ensure wall-running continues as long as the player is on the wall
+			if (timeOnWall > wallRunDuration)
+			{
+				StopWall();
+			}
 		}
 	}
 
@@ -423,7 +438,9 @@ public class playerMovement : MonoBehaviour
 
 	private bool IsWall(Vector3 v)
 	{
-		return Math.Abs(90f - Vector3.Angle(Vector3.up, v)) < 0.1f;
+		// Check if the surface is a wall (approximately 90 degrees from the up vector)
+		float angle = Vector3.Angle(Vector3.up, v);
+		return Mathf.Abs(90f - angle) < 5f; // Allow a small margin of error
 	}
 
 	private bool IsRoof(Vector3 v)
@@ -435,49 +452,57 @@ public class playerMovement : MonoBehaviour
 	{
 		if (!grounded && readyToWallrun)
 		{
+			Debug.Log("Starting wall run");
 			wallNormalVector = normal;
 			timeOnWall = 0.0f;
-			
+
 			if (!wallRunning)
 			{
 				rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-				rb.AddForce(Vector3.up * 10f, ForceMode.Impulse); //jump bost instead of constant force
+				rb.AddForce(Vector3.up * wallRunJumpBoost, ForceMode.Impulse); // Apply jump boost
 			}
 			wallRunning = true;
 		}
 	}
 
+
 	private void OnCollisionStay(Collision other)
-	
 	{
-		
 		int layer = other.gameObject.layer;
-		
-		if ((int)whatIsGround != ((int)whatIsGround | (1 << layer)))
+		Debug.Log($"Collided with layer: {LayerMask.LayerToName(layer)}");
+
+		if (((1 << layer) & whatIsWallrunnable) != 0)
 		{
-			return;
+			Debug.Log("Collided with a wallrunnable object");
+			for (int i = 0; i < other.contactCount; i++)
+			{
+				Vector3 normal = other.contacts[i].normal;
+				Debug.Log($"Normal angle: {Vector3.Angle(Vector3.up, normal)}");
+
+				if (IsWall(normal))
+				{
+					Debug.Log("Wall detected, starting wall run");
+					StartWallRun(normal);
+					onWall = true;
+					cancellingWall = false;
+					break;
+				}
+			}
 		}
+
+		// Handle grounded and surf states
 		for (int i = 0; i < other.contactCount; i++)
 		{
 			Vector3 normal = other.contacts[i].normal;
 			if (IsFloor(normal))
 			{
-				if (wallRunning)
-				{
-					wallRunning = false;
-				}
 				grounded = true;
 				normalVector = normal;
 				cancellingGrounded = false;
 				CancelInvoke("StopGrounded");
-			}
-			if (IsWall(normal) && layer == LayerMask.NameToLayer("wallrun"))
-				Debug.Log("On wall:");
-			{
-				StartWallRun(normal);
-				onWall = true;
-				cancellingWall = false;
-				// CancelInvoke("StopWall");
+
+				// Reset wall jump flag when landing
+				hasWallJumped = false;
 			}
 			if (IsSurf(normal))
 			{
@@ -485,8 +510,9 @@ public class playerMovement : MonoBehaviour
 				cancellingSurf = false;
 				CancelInvoke("StopSurf");
 			}
-			IsRoof(normal);
 		}
+
+		// Cancel grounded/wall/surf states after a delay
 		float num = 3f;
 		if (!cancellingGrounded)
 		{
@@ -504,7 +530,6 @@ public class playerMovement : MonoBehaviour
 			Invoke("StopSurf", Time.deltaTime * num);
 		}
 	}
-
 	private void StopGrounded()
 	{
 		grounded = false;
@@ -515,6 +540,7 @@ public class playerMovement : MonoBehaviour
 		timeOnWall = 0.0f;
 		onWall = false;
 		wallRunning = false;
+		hasWallJumped = false; // Reset wall jump flag
 	}
 
 	private void StopSurf()
