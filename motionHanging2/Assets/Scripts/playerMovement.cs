@@ -119,7 +119,7 @@ public class playerMovement : MonoBehaviour
         //Looking around
 		Look();
 
-		if (onwall)
+		if (onWall)
 		{
 			timeOnWall += Time.deltaTime;
 			if (timeOnWall > 0.5f)
@@ -394,8 +394,15 @@ public class playerMovement : MonoBehaviour
 	{
 		if (wallRunning)
 		{
+			timeOnWall += Time.deltaTime;
+
 			rb.AddForce(-wallNormalVector * Time.deltaTime * moveSpeed);
-			rb.AddForce(Vector3.up * Time.deltaTime * rb.mass * 100f * wallRunGravity);
+
+			float wallRunLift = Mathf.Clamp(Mathf.Lerp(100f, 10f, timeOnWall / 0.5f), 0f, 50f);
+			rb.AddForce(Vector3.up * Time.deltaTime * rb.mass * 100f * wallRunLift);
+		
+			rb.AddForce(orientation.transform.forward * Time.deltaTime * moveSpeed * 2f);
+			rb.AddForce(Vector3.down * Time.deltaTime * rb.mass * 10f);
 		}
 	}
 
@@ -429,11 +436,12 @@ public class playerMovement : MonoBehaviour
 		if (!grounded && readyToWallrun)
 		{
 			wallNormalVector = normal;
-			float num = 20f;
+			timeOnWall = 0.0f;
+			
 			if (!wallRunning)
 			{
 				rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-				rb.AddForce(Vector3.up * num, ForceMode.Impulse);
+				rb.AddForce(Vector3.up * 10f, ForceMode.Impulse); //jump bost instead of constant force
 			}
 			wallRunning = true;
 		}
