@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Drag")]
     [SerializeField] float groundDrag = 6f;
-    [SerializeField] float airDrag = 2f;
+    [SerializeField] float airDrag = 0.5f;
 
     float horizontalMovement;
     float verticalMovement;
@@ -37,6 +37,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask groundMask;
     [SerializeField] float groundDistance = 0.2f;
     public bool isGrounded { get; private set; }
+
+    [Header("Swinging")]
+    [SerializeField] LayerMask whatIsGrappleable;
+    [SerializeField] Transform gunTip, player;
+	[SerializeField] new Transform camera;
+    [SerializeField] float maxDistance = 100f;
+    private LineRenderer lr;
+    private Vector3 grapplePoint;
+    private SpringJoint joint;
+    private Vector3 currentGrapplePosition;
 
     Vector3 moveDirection;
     Vector3 slopeMoveDirection;
@@ -144,4 +154,61 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier * airMultiplier, ForceMode.Acceleration);
         }
     }
+
+
+//Swinging
+    void StartGrapple()
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable))
+            {
+                grapplePoint = hit.point;
+                joint = player.gameObject.AddComponent<SpringJoint>();
+                joint.autoConfigureConnectedAnchor = false;
+                joint.connectedAnchor = grapplePoint;
+
+                float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+
+                // Configure joint settings
+                joint.maxDistance = distanceFromPoint * 0.8f;
+                joint.minDistance = distanceFromPoint * 0.25f;
+
+                joint.spring = 4.5f;
+                joint.damper = 7f;
+                joint.massScale = 4.5f;
+
+                // Start drawing the rope
+                lr.positionCount = 2;
+                currentGrapplePosition = gunTip.position;
+            }
+        }
+
+        void StopGrapple()
+        {
+            lr.positionCount = 0;
+            if (joint != null)
+            {
+                Destroy(joint);
+            }
+        }
+
+        void DrawRope()
+        {
+            if (!joint) return;
+
+            currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 8f);
+
+            lr.SetPosition(0, gunTip.position);
+            lr.SetPosition(1, currentGrapplePosition);
+        }
+
+        public bool IsGrappling()
+        {
+            return joint != null;
+        }
+
+        public Vector3 GetGrapplePoint()
+        {
+            return grapplePoint;
+        }
 }

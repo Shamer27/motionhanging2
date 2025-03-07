@@ -8,6 +8,13 @@ public class MoveCamera : MonoBehaviour
 
     void Update()
     {
-        transform.position = cameraPosition.position;
+        Vector3 targetPosition = cameraPosition.position;
+        RaycastHit hit;
+        if (Physics.Raycast(cameraPosition.position, -cameraPosition.forward, out hit, 0.5f))
+        {
+            targetPosition = hit.point + (cameraPosition.forward * 1.5f);
+        }
+
+        transform.position = targetPosition;
     }
 }
