@@ -37,12 +37,14 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] LayerMask groundMask;
     [SerializeField] float groundDistance = 0.2f;
     public bool isGrounded { get; private set; }
+    
 
     [Header("Swinging")]
     [SerializeField] LayerMask whatIsGrappleable;
     [SerializeField] Transform gunTip, player;
 	[SerializeField] new Transform camera;
     [SerializeField] float maxDistance = 100f;
+    [SerializeField] float swingDrag = 2f;
     private LineRenderer lr;
     private Vector3 grapplePoint;
     private SpringJoint joint;
@@ -70,6 +72,7 @@ public class PlayerMovement : MonoBehaviour
         }
         return false;
     }
+    
 
     private void Start()
     {
@@ -108,6 +111,7 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         }
+
     }
 
     void ControlSpeed()
@@ -127,6 +131,11 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             rb.drag = groundDrag;
+        }
+
+        else if (IsGrappling())
+        {
+            rb.drag = swingDrag;
         }
         else
         {
