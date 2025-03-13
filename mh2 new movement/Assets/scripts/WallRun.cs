@@ -16,6 +16,9 @@ public class WallRun : MonoBehaviour
     [SerializeField] private float wallRunGravity;
     [SerializeField] private float wallRunJumpForce;
     [SerializeField] private float wallJumpForce = 300f;
+    [SerializeField] private float wallJumpForceUp = 20f;
+    [SerializeField] private float WJForceBack = 20f;
+    [SerializeField] private float WJForceForward = 20f;
 
     [Header("Camera")]
     [SerializeField] private Camera cam;
@@ -81,32 +84,45 @@ public class WallRun : MonoBehaviour
     void StartWallRun()
     {
         rb.useGravity = false;
-
         rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wallRunfov, wallRunfovTime * Time.deltaTime);
 
         if (wallLeft)
             tilt = Mathf.Lerp(tilt, -camTilt, camTiltTime * Time.deltaTime);
-        else if (wallRight)
+        else if (wallRight)     
             tilt = Mathf.Lerp(tilt, camTilt, camTiltTime * Time.deltaTime);
 
 
         if (Input.GetKeyDown(KeyCode.Space))
-        {
+        //  && ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.D)))
+        { 
+            
+            Vector3 wallRunJumpDirection = transform.up * wallJumpForceUp ;
+
             if (wallLeft)
-            {
-                Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                rb.AddForce(wallRunJumpDirection * wallRunJumpForce * wallRunJumpForce, ForceMode.Force);
-            }
+            
+                wallRunJumpDirection += leftWallHit.normal * wallRunJumpForce + WJForceForward;
+                // Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
+                // rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+                // rb.AddForce(wallRunJumpDirection * wallRunJumpForce * wallRunJumpForce * wallRunJumpForce , ForceMode.Force);
+                // Debug.Log("Wall jumping");
+            
             else if (wallRight)
-            {
-                Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
-                rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); 
-                rb.AddForce(wallRunJumpDirection * wallRunJumpForce * wallJumpForce, ForceMode.Force);
-            }
+            
+                wallRunJumpDirection += rightWallHit.normal * wallRunJumpForce + WJForceForward;
+                // Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
+                // rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); 
+                // rb.AddForce(wallRunJumpDirection * wallRunJumpForce * wallJumpForce * wallRunJumpForce, ForceMode.Force);
+                // Debug.Log("Wall jumping");
+            
+            rb.velocity = Vector3.zero;
+            rb.AddForce(wallRunJumpDirection.normalized * wallRunJumpForce, ForceMode.Impulse);
+            Debug.Log("Wall jumping");
+            
         }
+
+
     }
 
     void StopWallRun()

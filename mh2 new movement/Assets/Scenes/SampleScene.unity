@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -199,6 +199,7 @@ MonoBehaviour:
   player: {fileID: 10180818}
   camera: {fileID: 702686317}
   maxDistance: 100
+  swingDrag: 2
 --- !u!54 &10180820
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -247,6 +248,9 @@ MonoBehaviour:
   orientation: {fileID: 1700028452}
   wallDistance: 0.6
   minimumJumpHeight: 1.5
+  whatIsWallrunnable:
+    serializedVersion: 2
+    m_Bits: 1024
   wallRunGravity: 1
   wallRunJumpForce: 1
   wallJumpForce: 300
@@ -562,7 +566,7 @@ GameObject:
   - component: {fileID: 337621822}
   - component: {fileID: 337621821}
   - component: {fileID: 337621820}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1366,7 +1370,7 @@ GameObject:
   - component: {fileID: 1289637447}
   - component: {fileID: 1289637446}
   - component: {fileID: 1289637445}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1869,7 +1873,7 @@ GameObject:
   - component: {fileID: 1643700109}
   - component: {fileID: 1643700108}
   - component: {fileID: 1643700107}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
