@@ -104,7 +104,7 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = orientation.forward * verticalMovement + orientation.right * horizontalMovement;
     }
 
-    void Jump()
+    public void Jump()
     {
         if (isGrounded)
         {

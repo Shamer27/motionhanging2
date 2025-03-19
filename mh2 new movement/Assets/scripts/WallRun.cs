@@ -38,6 +38,8 @@ public class WallRun : MonoBehaviour
 
     private Rigidbody rb;
 
+  
+
     bool CanWallRun()
     {
         return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight);
@@ -80,6 +82,7 @@ public class WallRun : MonoBehaviour
             StopWallRun();
         }
     }
+    
 
     void StartWallRun()
     {
@@ -98,11 +101,11 @@ public class WallRun : MonoBehaviour
         //  && ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.D)))
         { 
             
-            Vector3 wallRunJumpDirection = transform.up * wallJumpForceUp ;
+            Vector3 wallRunJumpDirection = transform.up * wallJumpForceUp;
 
             if (wallLeft)
             
-                wallRunJumpDirection += leftWallHit.normal * wallRunJumpForce + WJForceForward;
+                wallRunJumpDirection += leftWallHit.normal * wallRunJumpForce;
                 // Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
                 // rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                 // rb.AddForce(wallRunJumpDirection * wallRunJumpForce * wallRunJumpForce * wallRunJumpForce , ForceMode.Force);
@@ -110,7 +113,7 @@ public class WallRun : MonoBehaviour
             
             else if (wallRight)
             
-                wallRunJumpDirection += rightWallHit.normal * wallRunJumpForce + WJForceForward;
+                wallRunJumpDirection += rightWallHit.normal * wallRunJumpForce;
                 // Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
                 // rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); 
                 // rb.AddForce(wallRunJumpDirection * wallRunJumpForce * wallJumpForce * wallRunJumpForce, ForceMode.Force);
