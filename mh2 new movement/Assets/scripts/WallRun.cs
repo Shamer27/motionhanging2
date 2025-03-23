@@ -15,10 +15,10 @@ public class WallRun : MonoBehaviour
     [Header("Wall Running")]
     [SerializeField] private float wallRunGravity;
     [SerializeField] private float wallRunJumpForce;
-    [SerializeField] private float wallJumpForce = 300f;
+    // [SerializeField] private float wallJumpForce = 300f;
     [SerializeField] private float wallJumpForceUp = 20f;
-    [SerializeField] private float WJForceBack = 20f;
-    [SerializeField] private float WJForceForward = 20f;
+    // [SerializeField] private float WJForceBack = 20f;
+    // [SerializeField] private float WJForceForward = 20f;
 
     [Header("Camera")]
     [SerializeField] private Camera cam;
@@ -27,6 +27,12 @@ public class WallRun : MonoBehaviour
     [SerializeField] private float wallRunfovTime;
     [SerializeField] private float camTilt;
     [SerializeField] private float camTiltTime;
+
+    [Header("Testing variables")]
+    [SerializeField] private bool isWallRunning;
+    // [SerializeField] private float wallRunCooldown = 0.2f;
+    [SerializeField] private float lastWallRunTime;
+
 
     public float tilt { get; private set; }
 
@@ -42,6 +48,7 @@ public class WallRun : MonoBehaviour
 
     bool CanWallRun()
     {
+
         return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight);
     }
 
@@ -97,6 +104,8 @@ public class WallRun : MonoBehaviour
             tilt = Mathf.Lerp(tilt, camTilt, camTiltTime * Time.deltaTime);
 
 
+
+
         if (Input.GetKeyDown(KeyCode.Space))
         //  && ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.D)))
         { 
@@ -124,6 +133,16 @@ public class WallRun : MonoBehaviour
             Debug.Log("Wall jumping");
             
         }
+
+        // if (Time.time < lastWallRunTime + wallRunCooldown)  return;
+        
+        // isWallRunning = true;
+        // rb.useGravity = false;
+        // rb.velocity = Vector3.zero;
+        // lastWallRunTime = Time.time;
+
+        // rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);   
+        
 
 
     }

@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Keybinds")]
     [SerializeField] KeyCode jumpKey = KeyCode.Space;
     [SerializeField] KeyCode sprintKey = KeyCode.LeftShift;
+    [SerializeField] KeyCode crouchKey = KeyCode.LeftControl;
 
     [Header("Drag")]
     [SerializeField] float groundDrag = 6f;
@@ -49,6 +50,9 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 grapplePoint;
     private SpringJoint joint;
     private Vector3 currentGrapplePosition;
+
+    [Header("Sliding")]
+
 
     Vector3 moveDirection;
     Vector3 slopeMoveDirection;
@@ -93,6 +97,16 @@ public class PlayerMovement : MonoBehaviour
             Jump();
         }
 
+		if (Input.GetKeyDown(crouchKey))
+		{
+			StartCrouch();
+		}
+        
+        if (Input.GetKeyUp(crouchKey))
+		{
+			StopCrouch();
+		}
+
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
     }
 
@@ -103,6 +117,24 @@ public class PlayerMovement : MonoBehaviour
 
         moveDirection = orientation.forward * verticalMovement + orientation.right * horizontalMovement;
     }
+
+    private void StartCrouch()
+	{
+		float num = 400f;
+		base.transform.localScale = new Vector3(1f, 0.5f, 1f);
+		base.transform.position = new Vector3(base.transform.position.x, base.transform.position.y - 0.5f, base.transform.position.z);
+		if (rb.velocity.magnitude > 0.1f && isGrounded)
+		{
+			rb.AddForce(orientation.transform.forward * num);
+		}
+	}
+
+    //Scale player to original size
+	private void StopCrouch()
+	{
+		base.transform.localScale = new Vector3(1f, 1.5f, 1f);
+		base.transform.position = new Vector3(base.transform.position.x, base.transform.position.y + 0.5f, base.transform.position.z);
+	}
 
     public void Jump()
     {
