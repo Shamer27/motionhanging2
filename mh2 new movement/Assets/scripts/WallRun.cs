@@ -59,9 +59,14 @@ public class WallRun : MonoBehaviour
 
     void CheckWall()
     {
+        Debug.DrawRay(transform.position, -orientation.right * wallDistance, Color.red);
+        Debug.DrawRay(transform.position, orientation.right * wallDistance, Color.blue);
+
         wallLeft = Physics.Raycast(transform.position, -orientation.right, out leftWallHit, wallDistance, whatIsWallrunnable);
         wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallDistance, whatIsWallrunnable);
     }
+
+
 
     private void Update()
     {
@@ -90,6 +95,13 @@ public class WallRun : MonoBehaviour
         }
     }
     
+void ApplyCameraTilt()
+{
+    if (!wallLeft && !wallRight) return;  // Only tilt when on a wall
+        float targetTilt = wallLeft ? -camTilt : camTilt;
+        tilt = Mathf.Lerp(tilt, targetTilt, camTiltTime * Time.deltaTime);
+}
+
 
     void StartWallRun()
     {
@@ -97,6 +109,8 @@ public class WallRun : MonoBehaviour
         rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wallRunfov, wallRunfovTime * Time.deltaTime);
+
+        ApplyCameraTilt();
 
         if (wallLeft)
             tilt = Mathf.Lerp(tilt, -camTilt, camTiltTime * Time.deltaTime);
