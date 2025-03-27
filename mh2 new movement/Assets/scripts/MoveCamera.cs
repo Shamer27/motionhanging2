@@ -1,20 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveCamera : MonoBehaviour
+public class FreezePosition : MonoBehaviour
 {
-    [SerializeField] Transform cameraPosition;
+    public Transform movingObject; // Drag the moving object here in the inspector
 
     void Update()
     {
-        Vector3 targetPosition = cameraPosition.position;
-        RaycastHit hit;
-        if (Physics.Raycast(cameraPosition.position, -cameraPosition.forward, out hit, 0.5f))
+        if (movingObject != null)
         {
-            targetPosition = hit.point + (cameraPosition.forward * 1.5f);
+            // Set the frozen object's position to be the same as the moving object's position
+            transform.position = movingObject.position;
         }
-
-        transform.position = targetPosition;
     }
 }

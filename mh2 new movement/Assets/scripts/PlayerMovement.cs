@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Drag")]
     [SerializeField] float groundDrag = 6f;
     [SerializeField] float airDrag = 0.5f;
+        [SerializeField] float swingDrag = 2f;
+ 
 
     float horizontalMovement;
     float verticalMovement;
@@ -45,7 +47,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform gunTip, player;
 	[SerializeField] new Transform camera;
     [SerializeField] float maxDistance = 100f;
-    [SerializeField] float swingDrag = 2f;
+
     private LineRenderer lr;
     private Vector3 grapplePoint;
     private SpringJoint joint;
