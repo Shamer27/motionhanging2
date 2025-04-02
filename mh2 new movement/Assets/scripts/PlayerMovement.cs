@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float acceleration = 10f;
 
     [Header("Jumping")]
-    public float jumpForce = 5f;
+    float jumpForce = 27.5f;
 
     [Header("Keybinds")]
     [SerializeField] KeyCode jumpKey = KeyCode.Space;
@@ -29,7 +29,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Drag")]
     [SerializeField] float groundDrag = 6f;
     [SerializeField] float airDrag = 0.5f;
-        [SerializeField] float swingDrag = 2f;
+    [SerializeField] float swingDrag = 2f;
+    [SerializeField] float extraGrav = 20f;
  
 
     float horizontalMovement;
@@ -169,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
 
         else if (IsGrappling())
         {
-            rb.drag = swingDrag;
+            rb.drag = 0;
         }
         else
         {
@@ -180,6 +181,12 @@ public class PlayerMovement : MonoBehaviour
     private void FixedUpdate()
     {
         MovePlayer();
+           // Apply extra gravity when not grounded and not swinging
+        if (!isGrounded && !IsGrappling())
+        {
+            Vector3 extraGravityForce = Vector3.down * extraGrav; // Adjust intensity of the extra gravity
+            rb.AddForce(extraGravityForce, ForceMode.Acceleration);
+        }
     }
 
     void MovePlayer()
@@ -209,15 +216,17 @@ public class PlayerMovement : MonoBehaviour
                 joint = player.gameObject.AddComponent<SpringJoint>();
                 joint.autoConfigureConnectedAnchor = false;
                 joint.connectedAnchor = grapplePoint;
+                extraGrav = 15f;
 
                 float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+                rb.AddForce(camera.forward * moveSpeed * 2.5f, ForceMode.Force); // Boost forward momentum during swing
 
                 // Configure joint settings
                 joint.maxDistance = distanceFromPoint * 0.8f;
                 joint.minDistance = distanceFromPoint * 0.25f;
 
-                joint.spring = 4.5f;
-                joint.damper = 7f;
+                joint.spring = 8f;
+                joint.damper = 4f;
                 joint.massScale = 4.5f;
 
                 // Start drawing the rope
