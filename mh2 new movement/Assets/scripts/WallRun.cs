@@ -2,44 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace WallRunning
-{
-    public enum PlayerState
-    {
-        Normal,
-        Swinging,
-        WallRunning
-    }
-}
-
 public class WallRun : MonoBehaviour
 {
-    public WallRunning.PlayerState currentState;
-[Header("Wall Movement")]
-[SerializeField] private Transform orientation; // Single Transform reference
+    public PlayerMovement.PlayerState currentState; // Fixed type mismatch
 
-[Header("Wall Detection")]
-[SerializeField] private float wallDistance = 0.5f; // Single float value
-[SerializeField] private float minimumJumpHeight = 1.5f; // Single float value
-[SerializeField] private LayerMask whatIsWallrunnable; // Single LayerMask reference
+    [Header("Wall Movement")]
+    [SerializeField] private Transform orientation;
 
-[Header("Wall Running")]
-[SerializeField] private float wallRunGravity = 5f; // Single float value
-[SerializeField] private float wallRunJumpForce = 20f; // Single float value
-[SerializeField] private float wallJumpForceUp = 20f; // Single float value
+    [Header("Wall Detection")]
+    [SerializeField] private float wallDistance = 0.5f;
+    [SerializeField] private float minimumJumpHeight = 1.5f;
+    [SerializeField] private LayerMask whatIsWallrunnable;
 
-[Header("Wall Camera")]
-[SerializeField] private Camera cam; // Single Camera reference
-[SerializeField] private float fov = 60f; // Field of view value (standard is around 60)
-[SerializeField] private float wallRunfov = 90f; // Adjusted field of view during wall run
-[SerializeField] private float wallRunfovTime = 0.5f; // Duration to interpolate FOV change
-[SerializeField] private float camTilt = 10f; // Camera tilt angle during wall run
-[SerializeField] private float camTiltTime = 0.5f; // Duration to interpolate camera tilt
+    [Header("Wall Running")]
+    [SerializeField] private float wallRunGravity = 5f;
+    [SerializeField] private float wallRunJumpForce = 20f;
+    [SerializeField] private float wallJumpForceUp = 20f;
 
-// Example of a properly declared array if needed in your script:
-//[SerializeField] private float[] wallRunSpeeds = new float[] { 5f, 10f, 15f }; // Array with predefined values
-
-
+    [Header("Wall Camera")]
+    [SerializeField] private Camera cam;
+    [SerializeField] private float fov = 60f;
+    [SerializeField] private float wallRunfov = 90f;
+    [SerializeField] private float wallRunfovTime = 0.5f;
+    [SerializeField] private float camTilt = 10f;
+    [SerializeField] private float camTiltTime = 0.5f;
 
     public float tilt { get; private set; }
 
@@ -52,11 +38,8 @@ public class WallRun : MonoBehaviour
     private Rigidbody rb;
     private PlayerMovement playerMovement;
 
-  
-
     public bool CanWallRun()
     {
-
         return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight);
     }
 
@@ -75,8 +58,6 @@ public class WallRun : MonoBehaviour
         wallRight = Physics.Raycast(transform.position, orientation.right, out rightWallHit, wallDistance, whatIsWallrunnable);
     }
 
-
-
     private void Update()
     {
         CheckWall();
@@ -86,12 +67,12 @@ public class WallRun : MonoBehaviour
             if (wallLeft)
             {
                 StartWallRun();
-                Debug.Log("wall running on the left");
+                Debug.Log("Wall running on the left");
             }
             else if (wallRight)
             {
                 StartWallRun();
-                Debug.Log("wall running on the right");
+                Debug.Log("Wall running on the right");
             }
             else
             {
@@ -103,18 +84,17 @@ public class WallRun : MonoBehaviour
             StopWallRun();
         }
     }
-    
-void ApplyCameraTilt()
-{
-    if (!wallLeft && !wallRight) return;  // Only tilt when on a wall
+
+    void ApplyCameraTilt()
+    {
+        if (!wallLeft && !wallRight) return; // Only tilt when on a wall
         float targetTilt = wallLeft ? -camTilt : camTilt;
         tilt = Mathf.Lerp(tilt, targetTilt, camTiltTime * Time.deltaTime);
-}
-
+    }
 
     void StartWallRun()
     {
-        playerMovement.currentState = PlayerState.WallRunning;
+        playerMovement.currentState = PlayerMovement.PlayerState.WallRunning; // Fixed type mismatch
         rb.useGravity = false;
         rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);
 
@@ -122,42 +102,24 @@ void ApplyCameraTilt()
 
         ApplyCameraTilt();
 
-        if (wallLeft)
-            tilt = Mathf.Lerp(tilt, -camTilt, camTiltTime * Time.deltaTime);
-        else if (wallRight)     
-            tilt = Mathf.Lerp(tilt, camTilt, camTiltTime * Time.deltaTime);
-
-
-
-
         if (Input.GetKeyDown(KeyCode.Space))
-        //  && ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.D)))
-        { 
-            
-            Vector3 wallRunJumpDirection = transform.up * (wallJumpForceUp + 2) ;
+        {
+            Vector3 wallRunJumpDirection = transform.up * wallJumpForceUp;
 
             if (wallLeft)
-            
                 wallRunJumpDirection += leftWallHit.normal * wallRunJumpForce;
-
-            
             else if (wallRight)
-            
                 wallRunJumpDirection += rightWallHit.normal * wallRunJumpForce;
 
-            
             rb.velocity = Vector3.zero;
-            rb.AddForce(wallRunJumpDirection.normalized * (wallRunJumpForce * wallJumpForceUp), ForceMode.Impulse);
+            rb.AddForce(wallRunJumpDirection.normalized * wallRunJumpForce, ForceMode.Impulse);
             Debug.Log("Wall jumping");
-            
         }
-
-
     }
 
     void StopWallRun()
     {
-        playerMovement.currentState = PlayerState.Normal;
+        playerMovement.currentState = PlayerMovement.PlayerState.Normal; // Fixed type mismatch
         rb.useGravity = true;
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, fov, wallRunfovTime * Time.deltaTime);

@@ -2,8 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
 public class PlayerMovement : MonoBehaviour
 {
     public enum PlayerState
@@ -12,9 +10,9 @@ public class PlayerMovement : MonoBehaviour
         Swinging,
         WallRunning
     }
-    float playerHeight = 2f;
 
-    public PlayerMovement.PlayerState currentState;
+    float playerHeight = 2f;
+    public PlayerState currentState;
 
     [SerializeField] Transform orientation;
 
@@ -37,13 +35,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] KeyCode sprintKey = KeyCode.LeftShift;
     [SerializeField] KeyCode crouchKey = KeyCode.LeftControl;
 
-
     [Header("Drag")]
     [SerializeField] float groundDrag = 6f;
     [SerializeField] float airDrag = 0.5f;
     [SerializeField] float swingDrag = 2f;
     [SerializeField] float extraGrav = 20f;
- 
 
     float horizontalMovement;
     float verticalMovement;
@@ -52,12 +48,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
     [SerializeField] float groundDistance = 0.2f;
-    
 
     [Header("Swinging")]
     [SerializeField] LayerMask whatIsGrappleable;
     [SerializeField] Transform gunTip, player;
-	[SerializeField] new Transform camera;
+    [SerializeField] new Transform camera;
     [SerializeField] float maxDistance = 100f;
 
     private LineRenderer lr;
@@ -66,31 +61,21 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 currentGrapplePosition;
 
     [Header("Sliding")]
-
-
     Vector3 moveDirection;
     Vector3 slopeMoveDirection;
 
     Rigidbody rb;
-
     RaycastHit slopeHit;
+    private WallRun wallRunning;
 
     private bool OnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f))
         {
-            if (slopeHit.normal != Vector3.up)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return slopeHit.normal != Vector3.up;
         }
         return false;
     }
-    
 
     private void Start()
     {
@@ -101,29 +86,28 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        IsGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-
         MyInput();
         ControlDrag();
         ControlSpeed();
 
-        if (Input.GetKeyDown(jumpKey) && IsGrounded)
+        if (Input.GetKeyDown(jumpKey) && IsGrounded())
         {
             Jump();
         }
 
-		if (Input.GetKeyDown(crouchKey))
-		{
-			StartCrouch();
-		}
-        
+        if (Input.GetKeyDown(crouchKey))
+        {
+            StartCrouch();
+        }
+
         if (Input.GetKeyUp(crouchKey))
-		{
-			StopCrouch();
-		}
+        {
+            StopCrouch();
+        }
 
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
     }
+
     private void FixedUpdate()
     {
         MovePlayer();
@@ -135,12 +119,11 @@ public class PlayerMovement : MonoBehaviour
                 rb.AddForce(Vector3.down * extraGrav, ForceMode.Acceleration);
                 break;
             case PlayerState.Normal:
-                rb.drag = IsGrounded ? groundDrag : airDrag;
+                rb.drag = IsGrounded() ? groundDrag : airDrag;
                 rb.useGravity = true;
                 break;
         }
     }
-
 
     void MyInput()
     {
@@ -151,38 +134,35 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void StartCrouch()
-	{
-		float num = 400f;
-		base.transform.localScale = new Vector3(1f, 0.5f, 1f);
-		base.transform.position = new Vector3(base.transform.position.x, base.transform.position.y - 0.5f, base.transform.position.z);
-		if (rb.velocity.magnitude > 0.1f && IsGrounded)
-		{
-			rb.AddForce(orientation.transform.forward * num);
-		}
-	}
+    {
+        float num = 400f;
+        transform.localScale = new Vector3(1f, 0.5f, 1f);
+        transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
+        if (rb.velocity.magnitude > 0.1f && IsGrounded())
+        {
+            rb.AddForce(orientation.transform.forward * num);
+        }
+    }
 
-    //Scale player to original size
-	private void StopCrouch()
-	{
-		base.transform.localScale = new Vector3(1f, 1.5f, 1f);
-		base.transform.position = new Vector3(base.transform.position.x, base.transform.position.y + 0.5f, base.transform.position.z);
-	}
+    private void StopCrouch()
+    {
+        transform.localScale = new Vector3(1f, 1.5f, 1f);
+        transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
+    }
 
     public void Jump()
     {
-        if (IsGrounded && !isJumping)
+        if (IsGrounded() && !isJumping)
         {
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             isJumping = false;
-            
         }
-
     }
 
     void ControlSpeed()
     {
-        if (Input.GetKey(sprintKey) && IsGrounded)
+        if (Input.GetKey(sprintKey) && IsGrounded())
         {
             moveSpeed = Mathf.Lerp(moveSpeed, sprintSpeed, acceleration * Time.deltaTime);
         }
@@ -194,11 +174,10 @@ public class PlayerMovement : MonoBehaviour
 
     void ControlDrag()
     {
-        if (IsGrounded)
+        if (IsGrounded())
         {
             rb.drag = groundDrag;
         }
-
         else if (IsGrappling())
         {
             rb.drag = 0;
@@ -209,86 +188,82 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     void MovePlayer()
     {
-        if (IsGrounded && !OnSlope())
+        if (IsGrounded() && !OnSlope())
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier, ForceMode.Acceleration);
         }
-        else if (IsGrounded && OnSlope())
+        else if (IsGrounded() && OnSlope())
         {
             rb.AddForce(slopeMoveDirection.normalized * moveSpeed * movementMultiplier, ForceMode.Acceleration);
         }
-        else if (!IsGrounded)
+        else if (!IsGrounded())
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier * airMultiplier, ForceMode.Acceleration);
         }
     }
 
-
-//Swinging
+    // Swinging
     void StartGrapple()
+    {
+        RaycastHit hit;
+        currentState = PlayerState.Swinging;
+        if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable))
         {
-            RaycastHit hit;
-            currentState = PlayerState.Swinging; //sets the player state to use swinging physics
-            if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable))
-            {
-                grapplePoint = hit.point;
-                joint = player.gameObject.AddComponent<SpringJoint>();
-                joint.autoConfigureConnectedAnchor = false;
-                joint.connectedAnchor = grapplePoint;
-                extraGrav = 15f;
+            grapplePoint = hit.point;
+            joint = player.gameObject.AddComponent<SpringJoint>();
+            joint.autoConfigureConnectedAnchor = false;
+            joint.connectedAnchor = grapplePoint;
+            extraGrav = 15f;
 
-                float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
-                rb.AddForce(camera.forward * moveSpeed * 2.5f, ForceMode.Force); // Boost forward momentum during swing
+            float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+            rb.AddForce(camera.forward * moveSpeed * 2.5f, ForceMode.Force);
 
-                // Configure joint settings
-                joint.maxDistance = distanceFromPoint * 0.8f;
-                joint.minDistance = distanceFromPoint * 0.25f;
+            joint.maxDistance = distanceFromPoint * 0.8f;
+            joint.minDistance = distanceFromPoint * 0.25f;
 
-                joint.spring = 8f;
-                joint.damper = 4f;
-                joint.massScale = 4.5f;
+            joint.spring = 8f;
+            joint.damper = 4f;
+            joint.massScale = 4.5f;
 
-                // Start drawing the rope
-                lr.positionCount = 2;
-                currentGrapplePosition = gunTip.position;
-            }
+            lr.positionCount = 2;
+            currentGrapplePosition = gunTip.position;
         }
+    }
 
-        void StopGrapple()
+    void StopGrapple()
+    {
+        currentState = PlayerState.Normal;
+        lr.positionCount = 0;
+        if (joint != null)
         {
-            currentState = PlayerState.Normal;
-            lr.positionCount = 0;
-            if (joint != null)
-            {
-                Destroy(joint);
-            }
+            Destroy(joint);
         }
+    }
 
-        void DrawRope()
-        {
-            if (!joint) return;
+    void DrawRope()
+    {
+        if (!joint) return;
 
-            currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 8f);
+        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 8f);
 
-            lr.SetPosition(0, gunTip.position);
-            lr.SetPosition(1, currentGrapplePosition);
-        }
+        lr.SetPosition(0, gunTip.position);
+        lr.SetPosition(1, currentGrapplePosition);
+    }
 
-        public bool IsGrappling()
-        {
-            return joint != null;
-        }
+    public bool IsGrappling()
+    {
+        return joint != null;
+    }
 
-        public Vector3 GetGrapplePoint()
-        {
-            return grapplePoint;
-        }
-        private bool IsGrounded()
-        {
-            // Ground detection logic here
-            return Physics.Raycast(transform.position, Vector3.down, 0.2f);
-        }
+    public Vector3 GetGrapplePoint()
+    {
+        return grapplePoint;
+    }
+
+    private bool IsGrounded()
+    {
+        return Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+    }
 }
