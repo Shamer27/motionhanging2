@@ -804,6 +804,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scenename: Level1
+--- !u!20 &476827149 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5828071604786223969, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+  m_PrefabInstance: {fileID: 1890696429215781608}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &583775901
 GameObject:
   m_ObjectHideFlags: 0
@@ -3015,8 +3020,40 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 436306725}
     - target: {fileID: 2057970088355112810, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 476827149}
+    - target: {fileID: 2057970088355112810, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+      propertyPath: fov
+      value: 80
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057970088355112810, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
       propertyPath: airDrag
       value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057970088355112810, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+      propertyPath: camTilt
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057970088355112810, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+      propertyPath: wallRunfov
+      value: 85
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057970088355112810, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+      propertyPath: camTiltTime
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057970088355112810, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+      propertyPath: wallRunGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057970088355112810, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+      propertyPath: wallRunfovTime
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2057970088355112810, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+      propertyPath: whatIsWallrunnable.m_Bits
+      value: 1024
       objectReference: {fileID: 0}
     - target: {fileID: 2606791575521860827, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
       propertyPath: m_Interpolate
@@ -3035,6 +3072,10 @@ PrefabInstance:
       value: Player Container
       objectReference: {fileID: 0}
     - target: {fileID: 5476711902269717736, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5476711902269717736, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
       propertyPath: targetScript
       value: 
       objectReference: {fileID: 1063922022}
@@ -3044,7 +3085,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5476711902269717736, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
       propertyPath: wallJumpForceUp
-      value: 15
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5476711902269717736, guid: 7aa40a2a23553f34c965051ef4a33b84, type: 3}
       propertyPath: wallRunJumpForce

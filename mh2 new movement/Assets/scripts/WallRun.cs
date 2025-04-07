@@ -2,36 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace WallRunning
+{
+    public enum PlayerState
+    {
+        Normal,
+        Swinging,
+        WallRunning
+    }
+}
+
 public class WallRun : MonoBehaviour
 {
-    [Header("Movement")]
-    [SerializeField] private Transform orientation;
+    public WallRunning.PlayerState currentState;
+[Header("Wall Movement")]
+[SerializeField] private Transform orientation; // Single Transform reference
 
-    [Header("Detection")]
-    [SerializeField] private float wallDistance = .5f;
-    [SerializeField] private float minimumJumpHeight = 1.5f;
-    [SerializeField] private LayerMask whatIsWallrunnable;
+[Header("Wall Detection")]
+[SerializeField] private float wallDistance = 0.5f; // Single float value
+[SerializeField] private float minimumJumpHeight = 1.5f; // Single float value
+[SerializeField] private LayerMask whatIsWallrunnable; // Single LayerMask reference
 
-    [Header("Wall Running")]
-    [SerializeField] private float wallRunGravity;
-    [SerializeField] private float wallRunJumpForce;
-    // [SerializeField] private float wallJumpForce = 300f;
-    [SerializeField] private float wallJumpForceUp = 20f;
-    // [SerializeField] private float WJForceBack = 20f;
-    // [SerializeField] private float WJForceForward = 20f;
+[Header("Wall Running")]
+[SerializeField] private float wallRunGravity = 5f; // Single float value
+[SerializeField] private float wallRunJumpForce = 20f; // Single float value
+[SerializeField] private float wallJumpForceUp = 20f; // Single float value
 
-    [Header("Camera")]
-    [SerializeField] private Camera cam;
-    [SerializeField] private float fov;
-    [SerializeField] private float wallRunfov;
-    [SerializeField] private float wallRunfovTime;
-    [SerializeField] private float camTilt;
-    [SerializeField] private float camTiltTime;
+[Header("Wall Camera")]
+[SerializeField] private Camera cam; // Single Camera reference
+[SerializeField] private float fov = 60f; // Field of view value (standard is around 60)
+[SerializeField] private float wallRunfov = 90f; // Adjusted field of view during wall run
+[SerializeField] private float wallRunfovTime = 0.5f; // Duration to interpolate FOV change
+[SerializeField] private float camTilt = 10f; // Camera tilt angle during wall run
+[SerializeField] private float camTiltTime = 0.5f; // Duration to interpolate camera tilt
 
-    [Header("Testing variables")]
-    [SerializeField] private bool isWallRunning;
-    // [SerializeField] private float wallRunCooldown = 0.2f;
-    [SerializeField] private float lastWallRunTime;
+// Example of a properly declared array if needed in your script:
+//[SerializeField] private float[] wallRunSpeeds = new float[] { 5f, 10f, 15f }; // Array with predefined values
+
 
 
     public float tilt { get; private set; }
@@ -43,10 +50,11 @@ public class WallRun : MonoBehaviour
     RaycastHit rightWallHit;
 
     private Rigidbody rb;
+    private PlayerMovement playerMovement;
 
   
 
-    bool CanWallRun()
+    public bool CanWallRun()
     {
 
         return !Physics.Raycast(transform.position, Vector3.down, minimumJumpHeight);
@@ -55,6 +63,7 @@ public class WallRun : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     void CheckWall()
@@ -105,6 +114,7 @@ void ApplyCameraTilt()
 
     void StartWallRun()
     {
+        playerMovement.currentState = PlayerState.WallRunning;
         rb.useGravity = false;
         rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);
 
@@ -124,45 +134,30 @@ void ApplyCameraTilt()
         //  && ((Input.GetKeyDown(KeyCode.A)) || (Input.GetKeyDown(KeyCode.D)))
         { 
             
-            Vector3 wallRunJumpDirection = transform.up * wallJumpForceUp;
+            Vector3 wallRunJumpDirection = transform.up * (wallJumpForceUp + 2) ;
 
             if (wallLeft)
             
                 wallRunJumpDirection += leftWallHit.normal * wallRunJumpForce;
-                // Vector3 wallRunJumpDirection = transform.up + leftWallHit.normal;
-                // rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
-                // rb.AddForce(wallRunJumpDirection * wallRunJumpForce * wallRunJumpForce * wallRunJumpForce , ForceMode.Force);
-                // Debug.Log("Wall jumping");
+
             
             else if (wallRight)
             
                 wallRunJumpDirection += rightWallHit.normal * wallRunJumpForce;
-                // Vector3 wallRunJumpDirection = transform.up + rightWallHit.normal;
-                // rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z); 
-                // rb.AddForce(wallRunJumpDirection * wallRunJumpForce * wallJumpForce * wallRunJumpForce, ForceMode.Force);
-                // Debug.Log("Wall jumping");
+
             
             rb.velocity = Vector3.zero;
-            rb.AddForce(wallRunJumpDirection.normalized * wallRunJumpForce, ForceMode.Impulse);
+            rb.AddForce(wallRunJumpDirection.normalized * (wallRunJumpForce * wallJumpForceUp), ForceMode.Impulse);
             Debug.Log("Wall jumping");
             
         }
-
-        // if (Time.time < lastWallRunTime + wallRunCooldown)  return;
-        
-        // isWallRunning = true;
-        // rb.useGravity = false;
-        // rb.velocity = Vector3.zero;
-        // lastWallRunTime = Time.time;
-
-        // rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);   
-        
 
 
     }
 
     void StopWallRun()
     {
+        playerMovement.currentState = PlayerState.Normal;
         rb.useGravity = true;
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, fov, wallRunfovTime * Time.deltaTime);

@@ -2,9 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class PlayerMovement : MonoBehaviour
 {
+    public enum PlayerState
+    {
+        Normal,
+        Swinging,
+        WallRunning
+    }
     float playerHeight = 2f;
+
+    public PlayerMovement.PlayerState currentState;
 
     [SerializeField] Transform orientation;
 
@@ -20,11 +30,13 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Jumping")]
     float jumpForce = 27.5f;
+    public bool isJumping;
 
     [Header("Keybinds")]
     [SerializeField] KeyCode jumpKey = KeyCode.Space;
     [SerializeField] KeyCode sprintKey = KeyCode.LeftShift;
     [SerializeField] KeyCode crouchKey = KeyCode.LeftControl;
+
 
     [Header("Drag")]
     [SerializeField] float groundDrag = 6f;
@@ -40,7 +52,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
     [SerializeField] float groundDistance = 0.2f;
-    public bool isGrounded { get; private set; }
     
 
     [Header("Swinging")]
@@ -85,17 +96,18 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
+        wallRunning = GetComponent<WallRun>();
     }
 
     private void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        IsGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         MyInput();
         ControlDrag();
         ControlSpeed();
 
-        if (Input.GetKeyDown(jumpKey) && isGrounded)
+        if (Input.GetKeyDown(jumpKey) && IsGrounded)
         {
             Jump();
         }
@@ -112,6 +124,23 @@ public class PlayerMovement : MonoBehaviour
 
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
     }
+    private void FixedUpdate()
+    {
+        MovePlayer();
+
+        switch (currentState)
+        {
+            case PlayerState.Swinging:
+                rb.drag = 0;
+                rb.AddForce(Vector3.down * extraGrav, ForceMode.Acceleration);
+                break;
+            case PlayerState.Normal:
+                rb.drag = IsGrounded ? groundDrag : airDrag;
+                rb.useGravity = true;
+                break;
+        }
+    }
+
 
     void MyInput()
     {
@@ -126,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
 		float num = 400f;
 		base.transform.localScale = new Vector3(1f, 0.5f, 1f);
 		base.transform.position = new Vector3(base.transform.position.x, base.transform.position.y - 0.5f, base.transform.position.z);
-		if (rb.velocity.magnitude > 0.1f && isGrounded)
+		if (rb.velocity.magnitude > 0.1f && IsGrounded)
 		{
 			rb.AddForce(orientation.transform.forward * num);
 		}
@@ -141,17 +170,19 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        if (isGrounded)
+        if (IsGrounded && !isJumping)
         {
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            isJumping = false;
+            
         }
 
     }
 
     void ControlSpeed()
     {
-        if (Input.GetKey(sprintKey) && isGrounded)
+        if (Input.GetKey(sprintKey) && IsGrounded)
         {
             moveSpeed = Mathf.Lerp(moveSpeed, sprintSpeed, acceleration * Time.deltaTime);
         }
@@ -163,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
 
     void ControlDrag()
     {
-        if (isGrounded)
+        if (IsGrounded)
         {
             rb.drag = groundDrag;
         }
@@ -178,28 +209,18 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        MovePlayer();
-           // Apply extra gravity when not grounded and not swinging
-        if (!isGrounded && !IsGrappling())
-        {
-            Vector3 extraGravityForce = Vector3.down * extraGrav; // Adjust intensity of the extra gravity
-            rb.AddForce(extraGravityForce, ForceMode.Acceleration);
-        }
-    }
 
     void MovePlayer()
     {
-        if (isGrounded && !OnSlope())
+        if (IsGrounded && !OnSlope())
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier, ForceMode.Acceleration);
         }
-        else if (isGrounded && OnSlope())
+        else if (IsGrounded && OnSlope())
         {
             rb.AddForce(slopeMoveDirection.normalized * moveSpeed * movementMultiplier, ForceMode.Acceleration);
         }
-        else if (!isGrounded)
+        else if (!IsGrounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier * airMultiplier, ForceMode.Acceleration);
         }
@@ -210,6 +231,7 @@ public class PlayerMovement : MonoBehaviour
     void StartGrapple()
         {
             RaycastHit hit;
+            currentState = PlayerState.Swinging; //sets the player state to use swinging physics
             if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable))
             {
                 grapplePoint = hit.point;
@@ -237,6 +259,7 @@ public class PlayerMovement : MonoBehaviour
 
         void StopGrapple()
         {
+            currentState = PlayerState.Normal;
             lr.positionCount = 0;
             if (joint != null)
             {
@@ -262,5 +285,10 @@ public class PlayerMovement : MonoBehaviour
         public Vector3 GetGrapplePoint()
         {
             return grapplePoint;
+        }
+        private bool IsGrounded()
+        {
+            // Ground detection logic here
+            return Physics.Raycast(transform.position, Vector3.down, 0.2f);
         }
 }
