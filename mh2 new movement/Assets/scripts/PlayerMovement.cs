@@ -4,15 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public enum PlayerState
-    {
-        Normal,
-        Swinging,
-        WallRunning
-    }
-
     float playerHeight = 2f;
-    public PlayerState currentState;
 
     [SerializeField] Transform orientation;
 
@@ -27,8 +19,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float acceleration = 10f;
 
     [Header("Jumping")]
-    float jumpForce = 27.5f;
-    public bool isJumping;
+    public float jumpForce = 5f;
+
 
     [Header("Keybinds")]
     [SerializeField] KeyCode jumpKey = KeyCode.Space;
@@ -40,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float airDrag = 0.5f;
     [SerializeField] float swingDrag = 2f;
     [SerializeField] float extraGrav = 20f;
+ 
 
     float horizontalMovement;
     float verticalMovement;
@@ -48,11 +41,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundMask;
     [SerializeField] float groundDistance = 0.2f;
+    public bool isGrounded { get; private set; }
+    
 
     [Header("Swinging")]
     [SerializeField] LayerMask whatIsGrappleable;
     [SerializeField] Transform gunTip, player;
-    [SerializeField] new Transform camera;
+	[SerializeField] new Transform camera;
     [SerializeField] float maxDistance = 100f;
 
     private LineRenderer lr;
@@ -61,68 +56,62 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 currentGrapplePosition;
 
     [Header("Sliding")]
+
+
     Vector3 moveDirection;
     Vector3 slopeMoveDirection;
 
     Rigidbody rb;
+
     RaycastHit slopeHit;
-    private WallRun wallRunning;
 
     private bool OnSlope()
     {
         if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f))
         {
-            return slopeHit.normal != Vector3.up;
+            if (slopeHit.normal != Vector3.up)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         return false;
     }
+    
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        wallRunning = GetComponent<WallRun>();
     }
 
     private void Update()
     {
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+
         MyInput();
         ControlDrag();
         ControlSpeed();
 
-        if (Input.GetKeyDown(jumpKey) && IsGrounded())
+        if (Input.GetKeyDown(jumpKey) && isGrounded)
         {
             Jump();
         }
 
-        if (Input.GetKeyDown(crouchKey))
-        {
-            StartCrouch();
-        }
-
+		if (Input.GetKeyDown(crouchKey))
+		{
+			StartCrouch();
+		}
+        
         if (Input.GetKeyUp(crouchKey))
-        {
-            StopCrouch();
-        }
+		{
+			StopCrouch();
+		}
 
         slopeMoveDirection = Vector3.ProjectOnPlane(moveDirection, slopeHit.normal);
-    }
-
-    private void FixedUpdate()
-    {
-        MovePlayer();
-
-        switch (currentState)
-        {
-            case PlayerState.Swinging:
-                rb.drag = 0;
-                rb.AddForce(Vector3.down * extraGrav, ForceMode.Acceleration);
-                break;
-            case PlayerState.Normal:
-                rb.drag = IsGrounded() ? groundDrag : airDrag;
-                rb.useGravity = true;
-                break;
-        }
     }
 
     void MyInput()
@@ -134,35 +123,36 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void StartCrouch()
-    {
-        float num = 400f;
-        transform.localScale = new Vector3(1f, 0.5f, 1f);
-        transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
-        if (rb.velocity.magnitude > 0.1f && IsGrounded())
-        {
-            rb.AddForce(orientation.transform.forward * num);
-        }
-    }
+	{
+		float num = 400f;
+		base.transform.localScale = new Vector3(1f, 0.5f, 1f);
+		base.transform.position = new Vector3(base.transform.position.x, base.transform.position.y - 0.5f, base.transform.position.z);
+		if (rb.velocity.magnitude > 0.1f && isGrounded)
+		{
+			rb.AddForce(orientation.transform.forward * num);
+		}
+	}
 
-    private void StopCrouch()
-    {
-        transform.localScale = new Vector3(1f, 1.5f, 1f);
-        transform.position = new Vector3(transform.position.x, transform.position.y + 0.5f, transform.position.z);
-    }
+    //Scale player to original size
+	private void StopCrouch()
+	{
+		base.transform.localScale = new Vector3(1f, 1.5f, 1f);
+		base.transform.position = new Vector3(base.transform.position.x, base.transform.position.y + 0.5f, base.transform.position.z);
+	}
 
     public void Jump()
     {
-        if (IsGrounded() && !isJumping)
+        if (isGrounded)
         {
             rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-            isJumping = false;
         }
+
     }
 
     void ControlSpeed()
     {
-        if (Input.GetKey(sprintKey) && IsGrounded())
+        if (Input.GetKey(sprintKey) && isGrounded)
         {
             moveSpeed = Mathf.Lerp(moveSpeed, sprintSpeed, acceleration * Time.deltaTime);
         }
@@ -174,12 +164,14 @@ public class PlayerMovement : MonoBehaviour
 
     void ControlDrag()
     {
-        if (IsGrounded())
+        if (isGrounded)
         {
             rb.drag = groundDrag;
         }
+
         else if (IsGrappling())
         {
+            rb.drag = swingDrag;
             rb.drag = 0;
         }
         else
@@ -188,82 +180,91 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        MovePlayer();
+           // Apply extra gravity when not grounded and not swinging
+        if (!isGrounded && !IsGrappling())
+        {
+            Vector3 extraGravityForce = Vector3.down * extraGrav; // Adjust intensity of the extra gravity
+            rb.AddForce(extraGravityForce, ForceMode.Acceleration);
+        }
+    }
+
     void MovePlayer()
     {
-        if (IsGrounded() && !OnSlope())
+        if (isGrounded && !OnSlope())
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier, ForceMode.Acceleration);
         }
-        else if (IsGrounded() && OnSlope())
+        else if (isGrounded && OnSlope())
         {
             rb.AddForce(slopeMoveDirection.normalized * moveSpeed * movementMultiplier, ForceMode.Acceleration);
         }
-        else if (!IsGrounded())
+        else if (!isGrounded)
         {
             rb.AddForce(moveDirection.normalized * moveSpeed * movementMultiplier * airMultiplier, ForceMode.Acceleration);
         }
     }
 
-    // Swinging
+
+//Swinging
     void StartGrapple()
-    {
-        RaycastHit hit;
-        currentState = PlayerState.Swinging;
-        if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable))
         {
-            grapplePoint = hit.point;
-            joint = player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = grapplePoint;
-            extraGrav = 15f;
+            RaycastHit hit;
+            if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable))
+            {
+                grapplePoint = hit.point;
+                joint = player.gameObject.AddComponent<SpringJoint>();
+                joint.autoConfigureConnectedAnchor = false;
+                joint.connectedAnchor = grapplePoint;
+                extraGrav = 15f;
 
-            float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
-            rb.AddForce(camera.forward * moveSpeed * 2.5f, ForceMode.Force);
+                float distanceFromPoint = Vector3.Distance(player.position, grapplePoint);
+                rb.AddForce(camera.forward * moveSpeed * 2.5f, ForceMode.Force); // Boost forward momentum during swing
 
-            joint.maxDistance = distanceFromPoint * 0.8f;
-            joint.minDistance = distanceFromPoint * 0.25f;
+                // Configure joint settings
+                joint.maxDistance = distanceFromPoint * 0.8f;
+                joint.minDistance = distanceFromPoint * 0.25f;
 
-            joint.spring = 8f;
-            joint.damper = 4f;
-            joint.massScale = 4.5f;
+                joint.spring = 4.5f;
+                joint.damper = 7f;
+                joint.spring = 8f;
+                joint.damper = 4f;
+                joint.massScale = 4.5f;
 
-            lr.positionCount = 2;
-            currentGrapplePosition = gunTip.position;
+                // Start drawing the rope
+                lr.positionCount = 2;
+                currentGrapplePosition = gunTip.position;
+            }
         }
-    }
 
-    void StopGrapple()
-    {
-        currentState = PlayerState.Normal;
-        lr.positionCount = 0;
-        if (joint != null)
+        void StopGrapple()
         {
-            Destroy(joint);
+            lr.positionCount = 0;
+            if (joint != null)
+            {
+                Destroy(joint);
+            }
         }
-    }
 
-    void DrawRope()
-    {
-        if (!joint) return;
+        void DrawRope()
+        {
+            if (!joint) return;
 
-        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 8f);
+            currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, grapplePoint, Time.deltaTime * 8f);
 
-        lr.SetPosition(0, gunTip.position);
-        lr.SetPosition(1, currentGrapplePosition);
-    }
+            lr.SetPosition(0, gunTip.position);
+            lr.SetPosition(1, currentGrapplePosition);
+        }
 
-    public bool IsGrappling()
-    {
-        return joint != null;
-    }
+        public bool IsGrappling()
+        {
+            return joint != null;
+        }
 
-    public Vector3 GetGrapplePoint()
-    {
-        return grapplePoint;
-    }
-
-    private bool IsGrounded()
-    {
-        return Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
-    }
+        public Vector3 GetGrapplePoint()
+        {
+            return grapplePoint;
+        }
 }

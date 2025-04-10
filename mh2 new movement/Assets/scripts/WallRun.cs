@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class WallRun : MonoBehaviour
 {
-    public PlayerMovement.PlayerState currentState; // Fixed type mismatch
 
     [Header("Wall Movement")]
     [SerializeField] private Transform orientation;
@@ -15,7 +14,7 @@ public class WallRun : MonoBehaviour
     [SerializeField] private LayerMask whatIsWallrunnable;
 
     [Header("Wall Running")]
-    [SerializeField] private float wallRunGravity = 5f;
+    [SerializeField] private float wallRunGravity = 5;
     [SerializeField] private float wallRunJumpForce = 20f;
     [SerializeField] private float wallJumpForceUp = 20f;
 
@@ -94,9 +93,8 @@ public class WallRun : MonoBehaviour
 
     void StartWallRun()
     {
-        playerMovement.currentState = PlayerMovement.PlayerState.WallRunning; // Fixed type mismatch
         rb.useGravity = false;
-        rb.AddForce(Vector3.down * wallRunGravity, ForceMode.Force);
+        rb.AddForce(Vector3.down * -wallRunGravity, ForceMode.Force);
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, wallRunfov, wallRunfovTime * Time.deltaTime);
 
@@ -119,7 +117,6 @@ public class WallRun : MonoBehaviour
 
     void StopWallRun()
     {
-        playerMovement.currentState = PlayerMovement.PlayerState.Normal; // Fixed type mismatch
         rb.useGravity = true;
 
         cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, fov, wallRunfovTime * Time.deltaTime);
