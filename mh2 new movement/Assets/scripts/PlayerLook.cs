@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerLook : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] WallRun wallRun;
+    [SerializeField] PlayerMovement playerMovement = null;
 
     [SerializeField] private float sensX = 100f;
     [SerializeField] private float sensY = 100f;
