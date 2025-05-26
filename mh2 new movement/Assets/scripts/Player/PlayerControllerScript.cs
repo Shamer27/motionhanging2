@@ -110,7 +110,7 @@ namespace ParkourFPS
         [SerializeField] private float grappleSpring = 4.5f;
         [SerializeField] private float grappleDamper = 7f;
         [SerializeField] private float grappleMassScale = 4.5f;
-
+        [SerializeField] private float exitForce = 5f;
 
         private SpringJoint grappleJoint;
         private Vector3 grapplePoint;
@@ -316,7 +316,7 @@ namespace ParkourFPS
                 Jump(); // try to jump
 
             /* sliding */
-            while (Input.GetKeyDown(slideButton) && !isSliding && slidingEnabled) // if player pressed the slide button and is not already sliding
+            while (Input.GetKeyDown(slideButton) && !isSliding && slidingEnabled && isGrounded) // if player pressed the slide button and is not already sliding and is grounded
                 StartCoroutine(Slide()); // try to slide
 
             if (Input.GetMouseButtonDown(0))
@@ -376,14 +376,17 @@ namespace ParkourFPS
                     /* start sliding */
 
                     isSliding = true; // set player currently sliding
-
+                    Debug.Log("is sliding");
                     if (slideMomentumIncrease != 0) // if sliding increases momentum
                         momentum += slideMomentumIncrease; // increase momentum
 
                     soundPlayer.PlaySound(soundPlayer.slidingSound); // play sliding sound
 
-                    yield return new WaitForSeconds(slideDuration); // wait for sliding duration
-
+                    // wait for sliding duration
+                    while (Input.GetKey(slideButton)) // Continue sliding while key is held
+                    {
+                        yield return null; // Wait for next frame
+                    }
                     /* finish sliding */
 
                     isSliding = false; // reset player currently sliding
@@ -483,7 +486,9 @@ namespace ParkourFPS
             isSwinging = false;
             grappleLine.positionCount = 0;
             if (grappleJoint != null)
+                playerRigidbody.AddRelativeForce(Vector3.forward * exitForce);
                 Destroy(grappleJoint);
+            
         }
 
         private void DrawGrappleRope()
