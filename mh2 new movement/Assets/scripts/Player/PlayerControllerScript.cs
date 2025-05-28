@@ -111,6 +111,7 @@ namespace ParkourFPS
         [SerializeField] private float grappleDamper = 7f;
         [SerializeField] private float grappleMassScale = 4.5f;
         [SerializeField] private float exitForce = 5f;
+        [SerializeField] private float swingExitFovIcrease = 10;
 
         private SpringJoint grappleJoint;
         private Vector3 grapplePoint;
@@ -487,6 +488,7 @@ namespace ParkourFPS
             grappleLine.positionCount = 0;
             if (grappleJoint != null)
                 playerRigidbody.AddRelativeForce(Vector3.forward * exitForce);
+                cameraComponent.fieldOfView = fieldOfView + swingExitFovIcrease;
                 Destroy(grappleJoint);
             
         }
