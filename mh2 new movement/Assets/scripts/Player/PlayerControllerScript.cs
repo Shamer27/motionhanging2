@@ -18,8 +18,8 @@ namespace ParkourFPS
         [Header("Camera")]
         [Tooltip("player camera transform")]
         [SerializeField] private Transform cameraTransform;
-        // [Tooltip("speed lines object")]
-        // [SerializeField] private GameObject speedLines;
+        [Tooltip("speed lines object")]
+         [SerializeField] private GameObject speedLines;
         [Tooltip("camera field of view")]
         [SerializeField] private float fieldOfView = 80;
         [Tooltip("mouse look sensitivity")]
@@ -111,12 +111,15 @@ namespace ParkourFPS
         [SerializeField] private float grappleDamper = 7f;
         [SerializeField] private float grappleMassScale = 4.5f;
         [SerializeField] private float exitForce = 5f;
-        [SerializeField] private float swingExitFovIcrease = 10;
-
+        [SerializeField] private Camera mainCamera;
+        [SerializeField] private float targetFOV = 60f; // Desired FOV
+        [SerializeField] private float duration = 2f;   // Duration to keep the new FOV
+        [SerializeField] private float fovTransitionTime = 1f; // Time to transition        
         private SpringJoint grappleJoint;
         private Vector3 grapplePoint;
         private Vector3 currentGrapplePosition;
         private bool isSwinging = false;
+        private bool stoppingSwing = false;
 
         [Header("Jumping")]
         [Tooltip("if the player is able to jump")]
@@ -125,6 +128,7 @@ namespace ParkourFPS
         [SerializeField] private KeyCode jumpButton = KeyCode.Space;
         [Tooltip("the vertical force when jumping")]
         [SerializeField] private float jumpAmount = 80;
+        [SerializeField] private float extraGravityForce = 3f;
 
         private static float jumpBufferTime = 0.2f; // the duration the player is still allowed to jump after leaving a surface
         private float lastJumpTime = 0f; // the time when last jumped
@@ -269,14 +273,16 @@ namespace ParkourFPS
                     playerRigidbody.AddForce(directionToPoint * pullForce, ForceMode.Acceleration);
             }
 
-            // // set speed lines
-            // if (speedLines != null) // if speedlines object set
-            // {
-            //     if (isWallrunning || isSliding) // if wallrunning or sliding
-            //         speedLines.SetActive(true); // enable speed lines
-            //     else // not wallrunning and not sliding
-            //         speedLines.SetActive(false); // disable speed lines
-            // }
+            // set speed lines
+            if (speedLines != null) // if speedlines object set
+            {
+                if (isWallrunning || isSliding || stoppingSwing) // if wallrunning or sliding
+                    speedLines.SetActive(true); // enable speed lines
+                else // not wallrunning and not sliding
+                    speedLines.SetActive(false); // disable speed lines
+            }
+
+
 
             SetPlayerHeight(); // set player height
 
@@ -432,6 +438,10 @@ namespace ParkourFPS
                 }
 
                 playerRigidbody.AddForce(new Vector3(horizontalJumpForce, jumpAmount, 0), ForceMode.VelocityChange); //add vertical jump force
+                // if (!isGrounded && playerRigidbody.velocity.y < 0) // Apply extra gravity when fallingq
+                
+                    playerRigidbody.AddForce(Vector3.down * extraGravityForce, ForceMode.Acceleration);
+                
 
                 // play jump sound
                 soundPlayer.PlaySound(soundPlayer.jumpSound, volume: 0.6f);
@@ -458,6 +468,33 @@ namespace ParkourFPS
         }
         #endregion
         #region swinging
+
+        IEnumerator changeFOV()
+        {
+            float startFOV = mainCamera.fieldOfView;
+            float elapsedTime = 0f;
+
+            while (elapsedTime < fovTransitionTime)
+            {
+                stoppingSwing = true;
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            //wait for the duration
+            yield return new WaitForSeconds(duration);
+
+            //set fov back
+            elapsedTime = 0f;
+            while (elapsedTime < fovTransitionTime)
+            {
+                stoppingSwing = false;
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            mainCamera.fieldOfView = startFOV;
+        }
         private void StartSwing()
         {
             if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, grappleMaxDistance, grappleLayer))
@@ -485,10 +522,11 @@ namespace ParkourFPS
         private void StopSwing()
         {
             isSwinging = false;
+            // StartCoroutine(changeFOV());
             grappleLine.positionCount = 0;
+            
             if (grappleJoint != null)
                 playerRigidbody.AddRelativeForce(Vector3.forward * exitForce);
-                cameraComponent.fieldOfView = fieldOfView + swingExitFovIcrease;
                 Destroy(grappleJoint);
             
         }
