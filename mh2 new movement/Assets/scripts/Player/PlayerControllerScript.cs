@@ -438,7 +438,7 @@ namespace ParkourFPS
                 }
 
                 playerRigidbody.AddForce(new Vector3(horizontalJumpForce, jumpAmount, 0), ForceMode.VelocityChange); //add vertical jump force
-                // if (!isGrounded && playerRigidbody.velocity.y < 0) // Apply extra gravity when fallingq
+    
                 
                     playerRigidbody.AddForce(Vector3.down * extraGravityForce, ForceMode.Acceleration);
                 
