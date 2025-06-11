@@ -15,7 +15,7 @@ C:/Users/sam.hamer/Downloads/MH2Files/motionhanging2/mh2 new movement
 -logFile
 Logs/AssetImportWorker1.log
 -srvPort
-60376
+65073
 Successfully changed project path to: C:/Users/sam.hamer/Downloads/MH2Files/motionhanging2/mh2 new movement
 C:/Users/sam.hamer/Downloads/MH2Files/motionhanging2/mh2 new movement
 [UnityMemory] Configuration Parameters - Can be set up in boot.config
@@ -49,14 +49,14 @@ C:/Users/sam.hamer/Downloads/MH2Files/motionhanging2/mh2 new movement
     "memorysetup-temp-allocator-size-cloud-worker=32768"
     "memorysetup-temp-allocator-size-gi-baking-worker=262144"
     "memorysetup-temp-allocator-size-gfx=262144"
-Player connection [7984]  Target information:
+Player connection [22088]  Target information:
 
-Player connection [7984]  * "[IP] 10.222.192.246 [Port] 0 [Flags] 2 [Guid] 2429089504 [EditorId] 2429089504 [Version] 1048832 [Id] WindowsEditor(7,Z4CE244CT3B) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
+Player connection [22088]  * "[IP] 10.222.192.246 [Port] 0 [Flags] 2 [Guid] 2030062967 [EditorId] 2030062967 [Version] 1048832 [Id] WindowsEditor(7,Z4CE244CT3B) [Debug] 1 [PackageName] WindowsEditor [ProjectName] Editor" 
 
-Player connection [7984] Host joined multi-casting on [225.0.0.222:54997]...
-Player connection [7984] Host joined alternative multi-casting on [225.0.0.222:34997]...
+Player connection [22088] Host joined multi-casting on [225.0.0.222:54997]...
+Player connection [22088] Host joined alternative multi-casting on [225.0.0.222:34997]...
 [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-Refreshing native plugins compatible for Editor in 243.02 ms, found 3 plugins.
+Refreshing native plugins compatible for Editor in 7.70 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
 Initialize engine version: 2022.3.51f1 (9f9d16c45e54)
 [Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2022.3.51f1/Editor/Data/Resources/UnitySubsystems
@@ -72,44 +72,44 @@ Initialize mono
 Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2022.3.51f1/Editor/Data/Managed'
 Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2022.3.51f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit-win32'
 Mono config path = 'C:/Program Files/Unity/Hub/Editor/2022.3.51f1/Editor/Data/MonoBleedingEdge/etc'
-Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56160
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56936
 Begin MonoManager ReloadAssembly
 Registering precompiled unity dll's ...
 Register platform support module: C:/Program Files/Unity/Hub/Editor/2022.3.51f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
-Registered in 0.006993 seconds.
-- Loaded All Assemblies, in  0.533 seconds
+Registered in 0.003656 seconds.
+- Loaded All Assemblies, in  0.325 seconds
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.298 seconds
-Domain Reload Profiling: 831ms
-	BeginReloadAssembly (176ms)
+- Finished resetting the current domain, in  0.259 seconds
+Domain Reload Profiling: 583ms
+	BeginReloadAssembly (99ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (0ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (2ms)
-	RebuildCommonClasses (41ms)
-	RebuildNativeTypeToScriptingClass (11ms)
-	initialDomainReloadingComplete (71ms)
-	LoadAllAssembliesAndSetupDomain (232ms)
-		LoadAssemblies (172ms)
+		CreateAndSetChildDomain (1ms)
+	RebuildCommonClasses (36ms)
+	RebuildNativeTypeToScriptingClass (9ms)
+	initialDomainReloadingComplete (48ms)
+	LoadAllAssembliesAndSetupDomain (131ms)
+		LoadAssemblies (98ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (229ms)
-			TypeCache.Refresh (226ms)
-				TypeCache.ScanAssembly (187ms)
-			ScanForSourceGeneratedMonoScriptInfo (1ms)
+		AnalyzeDomain (129ms)
+			TypeCache.Refresh (127ms)
+				TypeCache.ScanAssembly (114ms)
+			ScanForSourceGeneratedMonoScriptInfo (0ms)
 			ResolveRequiredComponents (1ms)
-	FinalizeReload (299ms)
+	FinalizeReload (260ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (231ms)
+		SetupLoadedEditorAssemblies (209ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (10ms)
-			SetLoadedEditorAssemblies (9ms)
+			InitializePlatformSupportModulesInManaged (8ms)
+			SetLoadedEditorAssemblies (7ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (3ms)
-			ProcessInitializeOnLoadAttributes (155ms)
-			ProcessInitializeOnLoadMethodAttributes (54ms)
+			BeforeProcessingInitializeOnLoad (2ms)
+			ProcessInitializeOnLoadAttributes (142ms)
+			ProcessInitializeOnLoadMethodAttributes (49ms)
 			AfterProcessingInitializeOnLoad (0ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
@@ -118,124 +118,124 @@ Domain Reload Profiling: 831ms
 Worker process is ready to serve import requests
 Caller must complete domain reload
 Begin MonoManager ReloadAssembly
-Symbol file data-0000026D60FB2030 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll
+Symbol file data-0000012FF6D384A0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61DF8FF0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.dll
+Symbol file data-0000012FF6D3DCB0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBCABAEE0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Stl.dll
+Symbol file data-0000012FF8321430 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Stl.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61D219C0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.dll
+Symbol file data-0000012FF68D5490 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61D219C0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Timeline.Editor.dll
+Symbol file data-0000012FF816A020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Timeline.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBC860E20 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll
+Symbol file data-0000012FF6D5CB00 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBCABAEE0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll
+Symbol file data-0000012FF81EFC00 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61F67430 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\UnityEditor.UI.dll
+Symbol file data-0000012FF71E9E80 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\UnityEditor.UI.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61D219C0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll
+Symbol file data-0000012FF80DCFF0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D62233010 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll
+Symbol file data-0000012FB30BE1B0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61F67430 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Rider.Editor.dll
+Symbol file data-0000012FF71E9E80 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Rider.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBC860E20 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.AddOns.Editor.dll
+Symbol file data-0000012FF6D5CB00 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.AddOns.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D60F18670 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\UnityEngine.UI.dll
+Symbol file data-0000012FF7068240 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\UnityEngine.UI.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBC9FB1E0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Csg.dll
+Symbol file data-0000012FF811EA00 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Csg.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D614A4EA0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll
+Symbol file data-0000012FB2DD5220 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61E86220 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll
+Symbol file data-0000012FB312E3F0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61D633D0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Timeline.dll
+Symbol file data-0000012FF779BC70 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Timeline.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61EAA030 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll
+Symbol file data-0000012FF71F1E90 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D614F7CB0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Editor.dll
+Symbol file data-0000012FB2DD5220 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61F70B20 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll
+Symbol file data-0000012FF68F6EA0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D60F18670 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Performance.Profile-Analyzer.Editor.dll
+Symbol file data-0000012FF7068240 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Performance.Profile-Analyzer.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D623EFE40 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.dll
+Symbol file data-0000012FF779BC70 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D623EFE40 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll
+Symbol file data-0000012FF7089450 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBC73EC20 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll
+Symbol file data-0000012FF8974420 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D623EFE40 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll
+Symbol file data-0000012FF7089450 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D623F9A50 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Poly2Tri.dll
+Symbol file data-0000012FF7158E30 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Poly2Tri.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61518AC0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll
+Symbol file data-0000012FF7158E30 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D622B3860 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Settings.Editor.dll
+Symbol file data-0000012FF779BC70 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Settings.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D622B3860 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.KdTree.dll
+Symbol file data-0000012FF77A5610 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.KdTree.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBCBDC3A0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
+Symbol file data-0000012FF77A5610 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBC73EC20 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TextMeshPro.dll
+Symbol file data-0000012FB2ED0550 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TextMeshPro.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBC777630 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
+Symbol file data-0000012FF89EDAD0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBC781840 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll
+Symbol file data-0000012FF8A02CE0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D622B3860 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.AssetIdRemapUtility.dll
+Symbol file data-0000012FB2F08F60 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.AssetIdRemapUtility.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D622B3860 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.State.dll
+Symbol file data-0000012FB2F18D80 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.State.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61056920 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll
+Symbol file data-0000012FB2F1ED90 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D6107A6A0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VSCode.Editor.dll
+Symbol file data-0000012FB2F52B20 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VSCode.Editor.dll
 Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  1.242 seconds
+- Loaded All Assemblies, in  0.817 seconds
 Native extension for WindowsStandalone target not found
 Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.772 seconds
-Domain Reload Profiling: 2007ms
-	BeginReloadAssembly (207ms)
+- Finished resetting the current domain, in  0.693 seconds
+Domain Reload Profiling: 1509ms
+	BeginReloadAssembly (169ms)
 		ExecutionOrderSort (0ms)
 		DisableScriptedObjects (4ms)
 		BackupInstance (0ms)
 		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (46ms)
-	RebuildCommonClasses (29ms)
-	RebuildNativeTypeToScriptingClass (14ms)
-	initialDomainReloadingComplete (33ms)
-	LoadAllAssembliesAndSetupDomain (951ms)
-		LoadAssemblies (474ms)
+		CreateAndSetChildDomain (25ms)
+	RebuildCommonClasses (30ms)
+	RebuildNativeTypeToScriptingClass (8ms)
+	initialDomainReloadingComplete (44ms)
+	LoadAllAssembliesAndSetupDomain (564ms)
+		LoadAssemblies (436ms)
 		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (433ms)
-			TypeCache.Refresh (379ms)
-				TypeCache.ScanAssembly (340ms)
-			ScanForSourceGeneratedMonoScriptInfo (32ms)
-			ResolveRequiredComponents (20ms)
-	FinalizeReload (772ms)
+		AnalyzeDomain (235ms)
+			TypeCache.Refresh (196ms)
+				TypeCache.ScanAssembly (175ms)
+			ScanForSourceGeneratedMonoScriptInfo (27ms)
+			ResolveRequiredComponents (11ms)
+	FinalizeReload (693ms)
 		ReleaseScriptCaches (0ms)
 		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (625ms)
+		SetupLoadedEditorAssemblies (510ms)
 			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (5ms)
-			SetLoadedEditorAssemblies (4ms)
+			InitializePlatformSupportModulesInManaged (6ms)
+			SetLoadedEditorAssemblies (5ms)
 			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (87ms)
-			ProcessInitializeOnLoadAttributes (453ms)
-			ProcessInitializeOnLoadMethodAttributes (71ms)
-			AfterProcessingInitializeOnLoad (4ms)
+			BeforeProcessingInitializeOnLoad (73ms)
+			ProcessInitializeOnLoadAttributes (347ms)
+			ProcessInitializeOnLoadMethodAttributes (75ms)
+			AfterProcessingInitializeOnLoad (5ms)
 			EditorAssembliesLoaded (0ms)
 		ExecutionOrderSort2 (0ms)
 		AwakeInstancesAfterBackupRestoration (6ms)
-Launched and connected shader compiler UnityShaderCompiler.exe after 0.04 seconds
-Refreshing native plugins compatible for Editor in 9.05 ms, found 3 plugins.
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.07 seconds
+Refreshing native plugins compatible for Editor in 4.54 ms, found 3 plugins.
 Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5395 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 29 unused Assets / (0.8 MB). Loaded Objects now: 5875.
-Memory consumption went from 215.7 MB to 214.9 MB.
-Total: 4.580800 ms (FindLiveObjects: 0.781400 ms CreateObjectMapping: 0.258200 ms MarkObjects: 3.163200 ms  DeleteObjects: 0.376100 ms)
+Unloading 5459 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 26 unused Assets / (403.0 KB). Loaded Objects now: 5942.
+Memory consumption went from 230.8 MB to 230.4 MB.
+Total: 5.686100 ms (FindLiveObjects: 0.700900 ms CreateObjectMapping: 0.426200 ms MarkObjects: 4.039600 ms  DeleteObjects: 0.517300 ms)
 
 AssetImportParameters requested are different than current active one (requested -> active):
   custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
@@ -253,478 +253,37 @@ AssetImportParameters requested are different than current active one (requested
   custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
 ========================================================================
 Received Import Request.
-  Time since last request: 652829.034955 seconds.
-  path: Assets/Scenes/Basic Movement/Level1.unity
-  artifactKey: Guid(b553dd0cb22a94b49aa8faba9a449662) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Scenes/Basic Movement/Level1.unity using Guid(b553dd0cb22a94b49aa8faba9a449662) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: 'be145bb1f4ec75add00b8d1ee773dd95') in 0.004256 seconds
+  Time since last request: 1163480.593317 seconds.
+  path: Assets/Models/swinging object.fbx
+  artifactKey: Guid(1306cd83641e3de43843484d275bdbb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Models/swinging object.fbx using Guid(1306cd83641e3de43843484d275bdbb0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+ -> (artifact id: 'fff6d0ccf8790a2df0406426469c99c0') in 0.379776 seconds
 Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 0
-========================================================================
-Received Prepare
-Switching render pipeline 00000000000000000000000000000000 -> c9786d60533b1434587ff2b3a0edcb2f
-Refreshing native plugins compatible for Editor in 3.60 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 53 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 6 unused Assets / (0.7 MB). Loaded Objects now: 5923.
-Memory consumption went from 112.3 MB to 111.6 MB.
-Total: 4.828300 ms (FindLiveObjects: 0.475400 ms CreateObjectMapping: 0.345000 ms MarkObjects: 3.661200 ms  DeleteObjects: 0.345000 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:CustomObjectIndexerAttribute: 72b91833f83ae208fae7752999fa3104 -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-========================================================================
-Received Prepare
-Refreshing native plugins compatible for Editor in 3.07 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 16 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 3 unused Assets / (350.9 KB). Loaded Objects now: 5938.
-Memory consumption went from 115.7 MB to 115.3 MB.
-Total: 4.671100 ms (FindLiveObjects: 0.493800 ms CreateObjectMapping: 0.369200 ms MarkObjects: 3.634500 ms  DeleteObjects: 0.171400 ms)
-
-Prepare: number of updated asset objects reloaded= 1
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:CustomObjectIndexerAttribute: 72b91833f83ae208fae7752999fa3104 -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+Number of asset objects unloaded after import = 38
 ========================================================================
 Received Import Request.
-  Time since last request: 834.411151 seconds.
-  path: Assets/materialsrendering/red.mat
-  artifactKey: Guid(86906e66949a48845af50743bed82177) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/materialsrendering/red.mat using Guid(86906e66949a48845af50743bed82177) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
+  Time since last request: 0.000394 seconds.
+  path: Assets/Prefabs/Player Controller.prefab
+  artifactKey: Guid(92d47fad1f15424438aa8f0d389d24cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/Player Controller.prefab using Guid(92d47fad1f15424438aa8f0d389d24cd) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
 [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: 'a52dd6baf9e159b31d11499037688f2c') in 1.322767 seconds
-Number of updated asset objects reloaded before import = 5
-Number of asset objects unloaded after import = 23
-========================================================================
-Received Import Request.
-  Time since last request: 0.000042 seconds.
-  path: Assets/materialsrendering/wallMovement.mat
-  artifactKey: Guid(e4fbce31e6b8eaf4fb05fe4001bb7988) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/materialsrendering/wallMovement.mat using Guid(e4fbce31e6b8eaf4fb05fe4001bb7988) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: 'e1dc81faabb9b09125bb6301710643dc') in 0.022957 seconds
+ -> (artifact id: '5f04378b72996f0b9098b9f96c8644d9') in 0.050632 seconds
 Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
+Number of asset objects unloaded after import = 83
 ========================================================================
 Received Import Request.
-  Time since last request: 0.000065 seconds.
-  path: Assets/materialsrendering/Start.mat
-  artifactKey: Guid(67ba1dc2860f69f4ea9a872be5a2b4b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/materialsrendering/Start.mat using Guid(67ba1dc2860f69f4ea9a872be5a2b4b7) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: '2478cfe9009d75b23fe428944e8a7d72') in 0.025224 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 3
-========================================================================
-Received Import Request.
-  Time since last request: 418.512251 seconds.
-  path: Assets/materialsrendering/floors.mat
-  artifactKey: Guid(58f7ad796927d864ea4ae81c1fde424b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/materialsrendering/floors.mat using Guid(58f7ad796927d864ea4ae81c1fde424b) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: '193e56cd07b4dfb33ce2948514bbe468') in 0.019056 seconds
-Number of updated asset objects reloaded before import = 1
-Number of asset objects unloaded after import = 1
-========================================================================
-Received Import Request.
-  Time since last request: 0.000034 seconds.
-  path: Assets/materialsrendering/levelChangeDoor.mat
-  artifactKey: Guid(c2e90eb0b894fd94db233b5946f65f35) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/materialsrendering/levelChangeDoor.mat using Guid(c2e90eb0b894fd94db233b5946f65f35) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: 'c036d954fa389715588238e575229aa8') in 0.016120 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 1
-========================================================================
-Received Import Request.
-  Time since last request: 0.000045 seconds.
+  Time since last request: 0.000040 seconds.
   path: Assets/materialsrendering/wall.mat
   artifactKey: Guid(2c21a2f31f9097345ba9fd35ad6460b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
 Start importing Assets/materialsrendering/wall.mat using Guid(2c21a2f31f9097345ba9fd35ad6460b0) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
 [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: 'baf28e8516fc0dc5ced74616f0f14ab3') in 0.020902 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 1
-========================================================================
-Received Prepare
-Caller must complete domain reload
-Begin MonoManager ReloadAssembly
-Symbol file data-0000026D63714010 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D62B7E050 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03049D00 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Stl.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F454D0850 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03690520 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Timeline.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61454020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D63231020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F0270C470 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\UnityEditor.UI.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F45FC8090 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026EBCA0AE60 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03C95DB0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Rider.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F0389B600 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.AddOns.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F0299A100 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\UnityEngine.UI.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D62B7E050 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Csg.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61204050 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F485F3030 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F02729830 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Timeline.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03043BC0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F45CEF8A0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D60E69BE0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F485F3030 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Performance.Profile-Analyzer.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D63231020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03684830 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03690520 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03043BC0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D6175CC40 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Poly2Tri.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D60E71080 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03684830 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Settings.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03684830 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.KdTree.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D62E2B020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F454D0850 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TextMeshPro.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F0447E020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F0347EDF0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03684830 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.AssetIdRemapUtility.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03684830 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.State.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F028C55E0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F028C55E0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VSCode.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  1.488 seconds
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  0.979 seconds
-Domain Reload Profiling: 2464ms
-	BeginReloadAssembly (317ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (7ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (123ms)
-	RebuildCommonClasses (33ms)
-	RebuildNativeTypeToScriptingClass (10ms)
-	initialDomainReloadingComplete (38ms)
-	LoadAllAssembliesAndSetupDomain (1087ms)
-		LoadAssemblies (1148ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (66ms)
-			TypeCache.Refresh (19ms)
-				TypeCache.ScanAssembly (1ms)
-			ScanForSourceGeneratedMonoScriptInfo (34ms)
-			ResolveRequiredComponents (11ms)
-	FinalizeReload (979ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (372ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (8ms)
-			SetLoadedEditorAssemblies (5ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (63ms)
-			ProcessInitializeOnLoadAttributes (242ms)
-			ProcessInitializeOnLoadMethodAttributes (50ms)
-			AfterProcessingInitializeOnLoad (3ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (9ms)
-Refreshing native plugins compatible for Editor in 3.20 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5275 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 21 unused Assets / (359.7 KB). Loaded Objects now: 6029.
-Memory consumption went from 201.2 MB to 200.8 MB.
-Total: 3.180700 ms (FindLiveObjects: 0.303400 ms CreateObjectMapping: 0.172200 ms MarkObjects: 2.547400 ms  DeleteObjects: 0.156500 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:scripting/monoscript/fileName/GetGlobalMatrixLite.cs: d68b8cc2467eb692c568a9afbf1e1cf3 -> 
-  custom:CustomObjectIndexerAttribute: 72b91833f83ae208fae7752999fa3104 -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:scripting/monoscript/fileName/ReadmeLite.cs: bcf610c110b08ae53900f9124d5a74fc -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:scripting/precompiled-assembly-types:Assembly-CSharp-Editor: ff564e1dbd602215bfb69d1d9b04bf26 -> 
-  custom:scripting/monoscript/fileName/ReadmeEditorLite.cs: 046d1d9742b893afd64dcb281deae780 -> 
-  custom:scripting/precompiled-assembly-types:Assembly-CSharp: 096bc6ee6e9da20eca805c61cb5f6725 -> 8269bb8a206b162d4bd1bfcfd483ae6c
-========================================================================
-Received Import Request.
-  Time since last request: 913.559927 seconds.
-  path: Assets/Suggo Creations/RETROWAVE SKIES Lite/Skybox Materials/Vapor_Skybox.mat
-  artifactKey: Guid(a09e2e60f7cbcfb469fd9ba84e6bb618) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Suggo Creations/RETROWAVE SKIES Lite/Skybox Materials/Vapor_Skybox.mat using Guid(a09e2e60f7cbcfb469fd9ba84e6bb618) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: '2ef02854b6be69f97dce0045ec988030') in 0.795004 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 22
-========================================================================
-Received Prepare
-Caller must complete domain reload
-Begin MonoManager ReloadAssembly
-Symbol file data-0000026F0293CC80 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.EditorCoroutines.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F47F53830 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F465CF010 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Stl.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F454D0850 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61DBE010 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Timeline.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61454020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61512050 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F462D6A80 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\UnityEditor.UI.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03EE51A0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Core.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03589010 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Core.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F4723B020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Rider.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F46797AA0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.AddOns.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03340030 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\UnityEngine.UI.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D62B7E050 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Csg.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F02D55020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Flow.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F01B69020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D63021010 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Timeline.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F478A1610 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F45C3E9E0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D60E69BE0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.SettingsProvider.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F01B69020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Performance.Profile-Analyzer.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F046CDFD0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F45FB7E00 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Model.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03690520 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.PlasticSCM.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D61454020 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Updater.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F45469E80 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.Poly2Tri.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F462D6A80 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03C8C820 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.Settings.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F03FFBDD0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.KdTree.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F45F49B10 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.CollabProxy.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F454D0850 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TextMeshPro.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D63021010 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F0347EDF0 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F45FB7E00 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.ProBuilder.AssetIdRemapUtility.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F45FB7E00 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VisualScripting.State.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026D62B7E050 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.AI.Navigation.Editor.ConversionSystem.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-Symbol file data-0000026F45FB7E00 doesn't match image C:\Users\sam.hamer\Downloads\MH2Files\motionhanging2\mh2 new movement\Library\ScriptAssemblies\Unity.VSCode.Editor.dll
-Symbol file LoadedFromMemory is not a mono symbol file
-- Loaded All Assemblies, in  0.934 seconds
-Native extension for WindowsStandalone target not found
-Mono: successfully reloaded assembly
-- Finished resetting the current domain, in  2.168 seconds
-Domain Reload Profiling: 3106ms
-	BeginReloadAssembly (367ms)
-		ExecutionOrderSort (0ms)
-		DisableScriptedObjects (26ms)
-		BackupInstance (0ms)
-		ReleaseScriptingObjects (0ms)
-		CreateAndSetChildDomain (150ms)
-	RebuildCommonClasses (29ms)
-	RebuildNativeTypeToScriptingClass (7ms)
-	initialDomainReloadingComplete (28ms)
-	LoadAllAssembliesAndSetupDomain (506ms)
-		LoadAssemblies (604ms)
-		RebuildTransferFunctionScriptingTraits (0ms)
-		AnalyzeDomain (21ms)
-			TypeCache.Refresh (8ms)
-				TypeCache.ScanAssembly (0ms)
-			ScanForSourceGeneratedMonoScriptInfo (0ms)
-			ResolveRequiredComponents (12ms)
-	FinalizeReload (2168ms)
-		ReleaseScriptCaches (0ms)
-		RebuildScriptCaches (0ms)
-		SetupLoadedEditorAssemblies (483ms)
-			LogAssemblyErrors (0ms)
-			InitializePlatformSupportModulesInManaged (9ms)
-			SetLoadedEditorAssemblies (4ms)
-			RefreshPlugins (0ms)
-			BeforeProcessingInitializeOnLoad (73ms)
-			ProcessInitializeOnLoadAttributes (316ms)
-			ProcessInitializeOnLoadMethodAttributes (76ms)
-			AfterProcessingInitializeOnLoad (5ms)
-			EditorAssembliesLoaded (0ms)
-		ExecutionOrderSort2 (0ms)
-		AwakeInstancesAfterBackupRestoration (12ms)
-Refreshing native plugins compatible for Editor in 3.10 ms, found 3 plugins.
-Preloading 0 native plugins for Editor in 0.00 ms.
-Unloading 5276 Unused Serialized files (Serialized files now loaded: 0)
-Unloading 21 unused Assets / (359.9 KB). Loaded Objects now: 6071.
-Memory consumption went from 201.8 MB to 201.4 MB.
-Total: 4.597800 ms (FindLiveObjects: 0.427100 ms CreateObjectMapping: 0.373800 ms MarkObjects: 3.473100 ms  DeleteObjects: 0.322800 ms)
-
-Prepare: number of updated asset objects reloaded= 0
-AssetImportParameters requested are different than current active one (requested -> active):
-  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
-  custom:video-codec-MediaFoundation-h265: 746d11721c4dcdbdad8f713fa42b33f4 -> 
-  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
-  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
-  custom:scripting/monoscript/fileName/GetGlobalMatrixLite.cs: d68b8cc2467eb692c568a9afbf1e1cf3 -> 
-  custom:CustomObjectIndexerAttribute: 72b91833f83ae208fae7752999fa3104 -> 
-  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
-  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
-  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
-  custom:SearchIndexIgnoredProperties: e643bd26f0fe6173181afceb89e7c659 -> 
-  custom:AudioImporter_EditorPlatform: d09bf68614088b80899f8185d706f6e7 -> 
-  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
-  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:scripting/monoscript/fileName/ReadmeLite.cs: bcf610c110b08ae53900f9124d5a74fc -> 
-  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
-  custom:scripting/precompiled-assembly-types:Assembly-CSharp-Editor: ff564e1dbd602215bfb69d1d9b04bf26 -> 
-  custom:scripting/monoscript/fileName/ReadmeEditorLite.cs: 046d1d9742b893afd64dcb281deae780 -> 
-  custom:scripting/precompiled-assembly-types:Assembly-CSharp: 096bc6ee6e9da20eca805c61cb5f6725 -> 8269bb8a206b162d4bd1bfcfd483ae6c
-========================================================================
-Received Import Request.
-  Time since last request: 1898.450384 seconds.
-  path: Assets/Suggo Creations/RETROWAVE SKIES Lite/Materials/M_Grid Vapor Lite.mat
-  artifactKey: Guid(b8ec9440f06384746a94b6d5afa3230e) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Suggo Creations/RETROWAVE SKIES Lite/Materials/M_Grid Vapor Lite.mat using Guid(b8ec9440f06384746a94b6d5afa3230e) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: 'a8337e1afcba8d854c260bf2c7626df9') in 1.689866 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 22
-========================================================================
-Received Import Request.
-  Time since last request: 2.962727 seconds.
-  path: Assets/Suggo Creations/RETROWAVE SKIES Lite/Textures/Sun Masks Textures/SunMask_StripesLite-01.png
-  artifactKey: Guid(e35515429b080e64ca556493cecbc99a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Suggo Creations/RETROWAVE SKIES Lite/Textures/Sun Masks Textures/SunMask_StripesLite-01.png using Guid(e35515429b080e64ca556493cecbc99a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: '5a1109b3fd3d5b85f997286b890ffda8') in 0.034139 seconds
+ -> (artifact id: 'e9de754cc79b8d83d0375d85b833cf9d') in 0.021699 seconds
 Number of updated asset objects reloaded before import = 0
 Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 1.834464 seconds.
-  path: Assets/Suggo Creations/RETROWAVE SKIES Lite/Textures/Grid Textures/Grid_Lines_Base Color Lite.png
-  artifactKey: Guid(93420f2b832493a45ae0c78c42e30a71) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Suggo Creations/RETROWAVE SKIES Lite/Textures/Grid Textures/Grid_Lines_Base Color Lite.png using Guid(93420f2b832493a45ae0c78c42e30a71) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: '05081253fb9cd142a9e71dcb4406995b') in 0.025913 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 0.000029 seconds.
-  path: Assets/Suggo Creations/RETROWAVE SKIES Lite/Textures/Grid Textures/Grid_Square Lite.png
-  artifactKey: Guid(a7b4e545c8ad3214ea05857ed52e319a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/Suggo Creations/RETROWAVE SKIES Lite/Textures/Grid Textures/Grid_Square Lite.png using Guid(a7b4e545c8ad3214ea05857ed52e319a) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: '0450ee485bc9efca67f8bd3f59d2bf90') in 0.020298 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 2
-========================================================================
-Received Import Request.
-  Time since last request: 51.589652 seconds.
-  path: Assets/TextMesh Pro/Fonts/LiberationSans.ttf
-  artifactKey: Guid(e3265ab4bf004d28a9537516768c1c75) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/TextMesh Pro/Fonts/LiberationSans.ttf using Guid(e3265ab4bf004d28a9537516768c1c75) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: 'ffeb27c9f56002419061e57b4ed62d09') in 0.041443 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 4
-========================================================================
-Received Import Request.
-  Time since last request: 0.000035 seconds.
-  path: Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
-  artifactKey: Guid(8f586378b4e144a9851e7b34d9b748ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
-Start importing Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset using Guid(8f586378b4e144a9851e7b34d9b748ee) Importer(815301076,1909f56bfc062723c751e8b465ee728b) [PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
-[PhysX] Initialized MultithreadedTaskDispatcher with 12 workers.
- -> (artifact id: 'ad935a817f0fa268ba85de2f0d2ab2b0') in 0.053063 seconds
-Number of updated asset objects reloaded before import = 0
-Number of asset objects unloaded after import = 9
 Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
 TcpMessagingSession - receive error: operation aborted. errorcode: 995, details: The I/O operation has been aborted because of either a thread exit or an application request.
 AssetImportWorker is now disconnected from the server
