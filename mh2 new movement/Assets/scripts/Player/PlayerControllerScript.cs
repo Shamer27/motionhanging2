@@ -566,9 +566,9 @@ namespace ParkourFPS
                 {
                     Physics.gravity = new Vector3(0, wallRunGravityReduction - gravity, 0); // reduce gravity
 
-                    momentum += wallRunMomentumIncrease; // increase momentum
+                    momentum += wallRunMomentumIncrease * 1.05f; // increase momentum
 
-                    verticalMoveAmount = 1; // move forward
+                    verticalMoveAmount = 1.1f; // move forward
                     horizontalMoveAmount *= 0.3f; // reduce side movement
                 }
                 else // not wallrunning
