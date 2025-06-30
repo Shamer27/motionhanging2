@@ -140,6 +140,8 @@ namespace ParkourFPS
         [Tooltip("the horizontal force added when wall jumping")]
         [SerializeField] private float wallJumpForce = 40;
 
+        [SerializeField] private LayerMask wallmoveLayer;
+
         [Header("Double Jump")]
         [Tooltip("if the player is able to double jump")]
         [SerializeField] private bool doubleJumpingEnabled = true;
@@ -557,7 +559,7 @@ namespace ParkourFPS
             float horizontalMoveAmount = Input.GetAxisRaw("Horizontal");
 
             #region wall running
-            if (wallrunningEnabled && !isCrouching && !touchingGround) // if wallrunning is enabled and not currently crouching or touching the ground
+            if (wallrunningEnabled && !isCrouching && !touchingGround ) // if wallrunning is enabled and not currently crouching or touching the ground
             {
                 // set wallrunning if touching a wall and moving forward
                 isWallrunning = (touchingWallRight || touchingWallLeft) && verticalMoveAmount > 0;

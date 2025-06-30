@@ -14,7 +14,7 @@ public class GameRespawn : MonoBehaviour {
     }
 
     void Start() { 
-        spawnPoint =transform.position;
+        spawnPoint = transform.position;
     }
 }
 
