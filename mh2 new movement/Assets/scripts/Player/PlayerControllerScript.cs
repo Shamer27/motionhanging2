@@ -325,7 +325,8 @@ namespace ParkourFPS
                 Jump(); // try to jump
 
             /* sliding */
-            while (Input.GetKeyDown(slideButton) && !isSliding && slidingEnabled && isGrounded) // if player pressed the slide button and is not already sliding and is grounded
+            // while (Input.GetKeyDown(slideButton) && !isSliding && slidingEnabled && isGrounded)
+            if (Input.GetKeyDown(slideButton) && !isSliding && slidingEnabled) // if player pressed the slide button and is not already sliding and is grounded
                 StartCoroutine(Slide()); // try to slide
 
             if (Input.GetMouseButtonDown(0))
@@ -362,16 +363,24 @@ namespace ParkourFPS
             }
             else
             {
-                if (changedPlayerHeight) // if height was changed
+                if (changedPlayerHeight)
                 {
-                    changedPlayerHeight = false;
+                    // Raycast up to check if there's room to stand
+                    if (!Physics.Raycast(transform.position, Vector3.up, out _, capsuleCollider.height, groundMask))
+                    {
+                        changedPlayerHeight = false;
 
-                    // increase player height
-                    capsuleCollider.center += new Vector3(0, capsuleCollider.height / 2f, 0);
-                    capsuleCollider.height *= 2f;
-                    cameraTransform.localPosition *= 4f;
+                        capsuleCollider.center += new Vector3(0, capsuleCollider.height / 2f, 0);
+                        capsuleCollider.height *= 2f;
+                        cameraTransform.localPosition *= 4f;
+                    }
+                    else
+                    {
+                        Debug.Log("Blocked above - can't stand up yet");
+                    }
                 }
             }
+
         }
 
         #region sliding
@@ -380,7 +389,8 @@ namespace ParkourFPS
         {
             if (!isSliding) // if not already sliding
             {
-                if (isGrounded && !touchingWallRight && !touchingWallLeft) // if touching a flat surface
+                // if (isGrounded && !touchingWallRight && !touchingWallLeft)
+                if (!touchingWallRight && !touchingWallLeft)  // if touching a flat surface
                 {
                     /* start sliding */
 
@@ -400,16 +410,22 @@ namespace ParkourFPS
 
                     isSliding = false; // reset player currently sliding
                 }
-                else if (!retry) // not touching a flat surface and not retrying to slide
+                else if (!retry) // first failed attempt
                 {
-                    float tempRetryTime = Time.time; // retry start time
-                    while (Time.time <= (tempRetryTime + jumpBufferTime) && !isSliding) // while not passed buffer time and didn't successfully slide
-                    {
-                        yield return new WaitForFixedUpdate(); // wait for next frame
+                    float retryEndTime = Time.time + jumpBufferTime;
 
-                        StartCoroutine(Slide(retry: true)); // try to slide again
+                    while (Time.time <= retryEndTime && !isSliding)
+                    {
+                        if (isGrounded && !touchingWallRight && !touchingWallLeft)
+                        {
+                            yield return Slide(retry: true); // restart safely
+                            break;
+                        }
+
+                        yield return new WaitForFixedUpdate();
                     }
                 }
+
             }
         }
         #endregion
@@ -418,7 +434,7 @@ namespace ParkourFPS
         // make player jump if he is able to
         private void Jump(bool retry = false)
         {
-            if ((isGrounded || hasDoubleJump) && (Time.time >= (lastJumpTime + jumpBufferTime + 0.1f))) // if player is touching the ground or able to double jump
+            if ((isGrounded || hasDoubleJump) && (Time.time >= (lastJumpTime + jumpBufferTime + 0.01f))) // if player is touching the ground or able to double jump
             {
                 if (!isGrounded) // if player used double jump
                     hasDoubleJump = false; // disable double jump
@@ -562,6 +578,12 @@ namespace ParkourFPS
             if (wallrunningEnabled && !isCrouching && !touchingGround ) // if wallrunning is enabled and not currently crouching or touching the ground
             {
                 // set wallrunning if touching a wall and moving forward
+                if (!isSliding && (touchingWallRight || touchingWallLeft) && verticalMoveAmount > 0)
+                    {
+                        isWallrunning = true;
+                        isSliding = false;
+                    } // reset sliding status
+                    
                 isWallrunning = (touchingWallRight || touchingWallLeft) && verticalMoveAmount > 0;
 
                 if (isWallrunning) // if currently wallrunning
