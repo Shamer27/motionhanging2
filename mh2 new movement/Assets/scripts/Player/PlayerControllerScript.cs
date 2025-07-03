@@ -33,7 +33,8 @@ namespace ParkourFPS
         [Tooltip("if to decrease movement speed when walking up a slope")]
         [SerializeField] private bool slopeSpeedDecrease = false;
         [Tooltip("base player walking speed")]
-        [SerializeField] private float walkSpeed = 100;
+        // [SerializeField]
+        private float walkSpeed = 150;
         [Tooltip("velocity multiplier when player is in the air")]
         [SerializeField] private float airMultiplier = 1.1f;
 
@@ -43,7 +44,8 @@ namespace ParkourFPS
         [Tooltip("run button")]
         [SerializeField] private KeyCode runButton = KeyCode.LeftShift;
         [Tooltip("base player running speed")]
-        [SerializeField] private float runSpeed = 130;
+        // [SerializeField] 
+        private float runSpeed = 180;
         [Tooltip("amount of fov increase when running")]
         [SerializeField] private float runFovIcrease = 10;
 
@@ -262,6 +264,11 @@ namespace ParkourFPS
             touchingWallLeft = TouchingWallLeft(); // set touching left wall status
             if (touchingWallLeft) // if touching
                 leftWallTouchTime = Time.time; // set touch time
+
+            void OnTriggerEnter(Collider other) {
+            if(other.CompareTag("Player")){
+            SceneManager.LoadScene(scenename);
+        }
 
             // check if touching the ground
             touchingGround = TouchingGround();
@@ -518,6 +525,7 @@ namespace ParkourFPS
             if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out RaycastHit hit, grappleMaxDistance, grappleLayer))
             {
                 grapplePoint = hit.point;
+                hasDoubleJump = false;
 
                 grappleJoint = gameObject.AddComponent<SpringJoint>();
                 grappleJoint.autoConfigureConnectedAnchor = false;
@@ -540,6 +548,7 @@ namespace ParkourFPS
         private void StopSwing()
         {
             isSwinging = false;
+            hasDoubleJump = true;
             // StartCoroutine(changeFOV());
             grappleLine.positionCount = 0;
             
@@ -581,6 +590,7 @@ namespace ParkourFPS
                 if (!isSliding && (touchingWallRight || touchingWallLeft) && verticalMoveAmount > 0)
                     {
                         isWallrunning = true;
+                        
                         isSliding = false;
                     } // reset sliding status
                     
@@ -612,6 +622,8 @@ namespace ParkourFPS
 
             // set default movement force for moving on the ground
             Vector3 moveForce = moveDirection.normalized;
+
+            
 
             if (!isGrounded) // if moving in the air
                 moveForce *= airMultiplier; // set air movement force
