@@ -363,23 +363,28 @@ namespace ParkourFPS
             }
             else
             {
-                if (changedPlayerHeight)
-                {
-                    // Raycast up to check if there's room to stand
-                    if (!Physics.Raycast(transform.position, Vector3.up, out _, capsuleCollider.height, groundMask))
-                    {
-                        changedPlayerHeight = false;
+            if (changedPlayerHeight)
+            {
+                // 👇 Replace the whole old block here 👇
+                float standHeight = capsuleCollider.height * 2f;
+                float radius = capsuleCollider.radius;
+                Vector3 bottom = transform.position + Vector3.up * radius;
+                Vector3 top = bottom + Vector3.up * (standHeight - radius * 2f);
 
-                        capsuleCollider.center += new Vector3(0, capsuleCollider.height / 2f, 0);
-                        capsuleCollider.height *= 2f;
-                        cameraTransform.localPosition *= 4f;
-                    }
-                    else
-                    {
-                        Debug.Log("Blocked above - can't stand up yet");
-                    }
+                if (!Physics.CheckCapsule(bottom, top, radius, groundMask))
+                {
+                    changedPlayerHeight = false;
+
+                    capsuleCollider.center += new Vector3(0, capsuleCollider.height / 2f, 0);
+                    capsuleCollider.height *= 2f;
+                    cameraTransform.localPosition *= 4f;
+                }
+                else
+                {
+                    Debug.Log("Blocked above - can't uncrouch");
                 }
             }
+        }
 
         }
 

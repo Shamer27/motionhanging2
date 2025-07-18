@@ -7,7 +7,7 @@ public class Menu : MonoBehaviour
 {
     public void onPlayButton ()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Level1Shaded");
     }
 
     public void onQuitButton ()
