@@ -9,12 +9,11 @@ ScriptsOnlyBuild:
     - ParkourFPS.CursorState
     - ParkourFPS.PlayerControllerScript
     - ParkourFPS.SoundPlayer
+    - PauseMenu
     - PlayerPathLogger
     - PlayerPathVisualizer
     - RotateGun
     - nextscene
-    Unity.Formats.Fbx.Editor.dll:
-    - UnityEditor.Formats.Fbx.Exporter.ExportSettings
     Unity.PlasticSCM.Editor.dll:
     - Unity.PlasticSCM.Editor.PlasticWindow
     Unity.ProBuilder.Editor.dll:
@@ -111,6 +110,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
     - UnityEngine.UI.Outline
+    - UnityEngine.UI.Shadow
     - UnityEngine.UI.Text
   serializedClasses:
     Unity.RenderPipelines.Core.Runtime:
@@ -224,6 +224,15 @@ ScriptsOnlyBuild:
   - assembly: Unity.RenderPipelines.Core.Runtime
     fullTypeName: UnityEngine.Rendering.UI.DebugUIHandlerPanel
     methodName: ResetDebugManager
+  - assembly: Assembly-CSharp
+    fullTypeName: PauseMenu
+    methodName: Resume
+  - assembly: Assembly-CSharp
+    fullTypeName: PauseMenu
+    methodName: QuitGame
+  - assembly: Assembly-CSharp
+    fullTypeName: PauseMenu
+    methodName: LoadMenu
   sceneClasses:
     Assets/Scenes/1-3 Basic Movement/Shaded/Level1Shaded.unity:
     - Class: 1
@@ -1849,7 +1858,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 10308}
     - Class: 114
-      Script: {instanceID: 36030}
+      Script: {instanceID: 38154}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -2035,6 +2044,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 1830}
     - Class: 114
+      Script: {instanceID: 1832}
+    - Class: 114
       Script: {instanceID: 1878}
     - Class: 114
       Script: {instanceID: 2110}
@@ -2053,6 +2064,8 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 5548}
     - Class: 114
+      Script: {instanceID: 5604}
+    - Class: 114
       Script: {instanceID: 6194}
     - Class: 114
       Script: {instanceID: 6748}
@@ -2060,6 +2073,10 @@ ScriptsOnlyBuild:
       Script: {instanceID: 6844}
     - Class: 114
       Script: {instanceID: 7154}
+    - Class: 114
+      Script: {instanceID: 7618}
+    - Class: 114
+      Script: {instanceID: 8274}
     - Class: 114
       Script: {instanceID: 8438}
     - Class: 114
@@ -2072,6 +2089,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 10270}
     - Class: 114
       Script: {instanceID: 10308}
+    - Class: 114
+      Script: {instanceID: 10400}
+    - Class: 114
+      Script: {instanceID: 11308}
+    - Class: 114
+      Script: {instanceID: 30508}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 120
@@ -3145,7 +3168,7 @@ ScriptsOnlyBuild:
     className: DecalProjector
   - hash:
       serializedVersion: 2
-      Hash: d68e91cd1e88cc8693edcf97656877be
+      Hash: 563a0c133134a41fbf8b2ef161c80cef
     assemblyName: Assembly-CSharp
     namespaceName: ParkourFPS
     className: CursorState
@@ -3935,6 +3958,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 49a282bea22e1d6e2c900a56e15db2f0
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: PauseMenu
   platform: 19
   scenePathNames:
   - Assets/Scenes/Menus/MenuBackground.unity
