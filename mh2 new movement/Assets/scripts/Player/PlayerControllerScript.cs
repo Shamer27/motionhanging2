@@ -397,30 +397,32 @@ namespace ParkourFPS
         // try to make the player slide if able to
         private IEnumerator Slide(bool retry = false)
         {
-            if (!isSliding) // if not already sliding
+            if (!isSliding)
             {
-                // if (isGrounded && !touchingWallRight && !touchingWallLeft)
-                if (!touchingWallRight && !touchingWallLeft)  // if touching a flat surface
+                if (!touchingWallRight && !touchingWallLeft)
                 {
                     /* start sliding */
-
-                    isSliding = true; // set player currently sliding
+                    isSliding = true;
                     Debug.Log("is sliding");
-                    if (slideMomentumIncrease != 0) // if sliding increases momentum
-                        momentum += slideMomentumIncrease; // increase momentum
 
-                    soundPlayer.PlaySound(soundPlayer.slidingSound); // play sliding sound
+                    if (slideMomentumIncrease != 0)
+                        momentum += slideMomentumIncrease;
 
-                    // wait for sliding duration
-                    while (Input.GetKey(slideButton)) // Continue sliding while key is held
+                    soundPlayer.PlaySound(soundPlayer.slidingSound);
+
+                    // sliding loop
+                    while (Input.GetKey(slideButton))
                     {
-                        yield return null; // Wait for next frame
+                        yield return null;
                     }
-                    /* finish sliding */
 
-                    isSliding = false; // reset player currently sliding
+                    /* slide ends, now delay before resetting state */
+                    float slideEndDelay = 0.3f; // tweak this value as desired
+                    yield return new WaitForSeconds(slideEndDelay);
+
+                    isSliding = false;
                 }
-                else if (!retry) // first failed attempt
+                else if (!retry)
                 {
                     float retryEndTime = Time.time + jumpBufferTime;
 
@@ -428,16 +430,17 @@ namespace ParkourFPS
                     {
                         if (isGrounded && !touchingWallRight && !touchingWallLeft)
                         {
-                            yield return Slide(retry: true); // restart safely
+                            yield return Slide(retry: true);
                             break;
                         }
 
                         yield return new WaitForFixedUpdate();
                     }
                 }
-
             }
         }
+
+
         #endregion
 
         #region jumping

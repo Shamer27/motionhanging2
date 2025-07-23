@@ -509,6 +509,42 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 4, y: -4}
   m_UseGraphicAlpha: 1
+--- !u!1 &449018705
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 449018706}
+  m_Layer: 0
+  m_Name: RoofCheckPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &449018706
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 449018705}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 456971493}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &456971493 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2555762851141877998, guid: 92d47fad1f15424438aa8f0d389d24cd, type: 3}
+  m_PrefabInstance: {fileID: 1425732822}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &635085652
 GameObject:
   m_ObjectHideFlags: 0
@@ -7117,6 +7153,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4778343933248125759, guid: 92d47fad1f15424438aa8f0d389d24cd, type: 3}
       insertIndex: 0
       addedObject: {fileID: 861135817}
+    - targetCorrespondingSourceObject: {fileID: 2555762851141877998, guid: 92d47fad1f15424438aa8f0d389d24cd, type: 3}
+      insertIndex: 1
+      addedObject: {fileID: 449018706}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4326103816906910001, guid: 92d47fad1f15424438aa8f0d389d24cd, type: 3}
       insertIndex: -1
