@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     // Update is called once per frame
 
-    void start()
+    void Start()
     {
         pauseMenuUI.SetActive(false); // 🔥 Hide the menu at game start
         Time.timeScale = 1f;          // Ensure game is unpaused
@@ -45,21 +46,24 @@ public class PauseMenu : MonoBehaviour
     void Pause()
     {
         pauseMenuUI.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
         Time.timeScale = 0f;
         GameIsPaused = true;
         // Show pause menu UI here
     }
 
-    public void LoadMenu()
-    {
-        // Load the main menu scene
-        // SceneManager.LoadScene("MainMenu");
-        Debug.Log("Loading Menu...");
-    }
-
-    public void QuitGame()
+    public void SettingsMenu()
     {
         Debug.Log("Quitting game...");
         Application.Quit();
     }
+
+    public void LoadMenu()
+    {
+        // Load the main menu scene
+        SceneManager.LoadScene("MenuBackground");
+        Debug.Log("Loading Menu...");
+    }
+
+
 }
