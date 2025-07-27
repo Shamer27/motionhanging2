@@ -7,6 +7,20 @@ namespace ParkourFPS
     [RequireComponent(typeof(CapsuleCollider))]
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(SoundPlayer))]
+
+    [System.Serializable]
+    public class ControlBindings
+    {
+        public KeyCode forwardKey = KeyCode.W;
+        public KeyCode backwardKey = KeyCode.S;
+        public KeyCode leftKey = KeyCode.A;
+        public KeyCode rightKey = KeyCode.D;
+        public KeyCode jumpKey = KeyCode.Space;
+        public KeyCode slideKey = KeyCode.LeftControl;
+        public KeyCode sprintKey = KeyCode.LeftShift;
+        public int swingMouseKey = 0; // Left Click = 0, Right Click = 1, Middle = 2
+    }
+
     public class PlayerControllerScript : MonoBehaviour
     {
         #region components
@@ -22,12 +36,18 @@ namespace ParkourFPS
          [SerializeField] private GameObject speedLines;
         [Tooltip("camera field of view")]
         [SerializeField] private float fieldOfView = 80;
-        [Tooltip("mouse look sensitivity")]
-        [SerializeField] private float lookSensitivity = 2;
+
 
         private Camera cameraComponent; // the player camera component
         private static float lookXLimit = 90; // player upward rotation limit
         private float currRotationX = 0; // current player rotation
+
+
+
+
+        [SerializeField] public ControlBindings bindings = new ControlBindings();
+        [Tooltip("mouse look sensitivity")]
+        [SerializeField] public float lookSensitivity = 2f; // mouse look sensitivity
 
         [Header("Walking")]
         [Tooltip("if to decrease movement speed when walking up a slope")]
@@ -309,11 +329,10 @@ namespace ParkourFPS
         private void CheckUserInput()
         {
             /* running and crouching */
-            if (Input.GetKey(runButton) && runningEnabled
-                && (!staminaEnabled || !staminaEmpty)) // if holding the run button and player has stamina
+            if (Input.GetKey(bindings.sprintKey) && runningEnabled && (!staminaEnabled || !staminaEmpty))
             {
-                isRunning = true; // set running true
-                isCrouching = false; // set crouching false
+                isRunning = true;
+                isCrouching = false;
             }
             else // not running
             {
@@ -326,17 +345,18 @@ namespace ParkourFPS
             }
 
             /* jumping */
-            if (Input.GetKeyDown(jumpButton) && jumpingEnabled) // if player pressed jump button
-                Jump(); // try to jump
+
+            if (Input.GetKeyDown(bindings.jumpKey) && jumpingEnabled)
+                Jump();
 
             /* sliding */
             // while (Input.GetKeyDown(slideButton) && !isSliding && slidingEnabled && isGrounded)
-            if (Input.GetKeyDown(slideButton) && !isSliding && slidingEnabled) // if player pressed the slide button and is not already sliding and is grounded
-                StartCoroutine(Slide()); // try to slide
+            if (Input.GetKeyDown(bindings.slideKey) && !isSliding && slidingEnabled)
+                StartCoroutine(Slide());
 
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(bindings.swingMouseKey))
                 StartSwing();
-            else if (Input.GetMouseButtonUp(0))
+            else if (Input.GetMouseButtonUp(bindings.swingMouseKey))
                 StopSwing();
         }
 

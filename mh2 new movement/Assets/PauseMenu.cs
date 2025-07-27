@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PauseMenu : MonoBehaviour
+public class Menu : MonoBehaviour
 {
     public static bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
+    public GameObject settingsPanel; 
     // Update is called once per frame
 
     void Start()
     {
-        pauseMenuUI.SetActive(false); // 🔥 Hide the menu at game start
+        pauseMenuUI.SetActive(false); // Hide the menu at game start
         Time.timeScale = 1f;          // Ensure game is unpaused
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked; // Unlock the cursor
@@ -20,9 +21,13 @@ public class PauseMenu : MonoBehaviour
     }
     void Update()
     {
-      if (Input.GetKeyDown(KeyCode.Escape))
+      if (Input.GetKeyDown(KeyCode.Escape)) // Check for Escape key press
       {
-          if (GameIsPaused)
+            if (settingsPanel.activeSelf)
+            {
+                CloseSettings();
+            }
+          else if (GameIsPaused)
           {
               Resume();
           }
@@ -31,6 +36,16 @@ public class PauseMenu : MonoBehaviour
               Pause();
           }
       }
+    }
+
+    public void onPlayButton ()
+    {
+        SceneManager.LoadScene("Level1Shaded");
+    }
+
+    public void onQuitButton ()
+    {
+        Application.Quit();
     }
 
     public void Resume()
@@ -52,18 +67,29 @@ public class PauseMenu : MonoBehaviour
         // Show pause menu UI here
     }
 
-    public void SettingsMenu()
+    public void QuitGame()
     {
         Debug.Log("Quitting game...");
         Application.Quit();
     }
 
-    public void LoadMenu()
+    public void LoadMenu() //main menu
     {
         // Load the main menu scene
         SceneManager.LoadScene("MenuBackground");
         Debug.Log("Loading Menu...");
     }
 
+    public void OpenSettings()
+    {
+        settingsPanel.SetActive(true);
+        pauseMenuUI.SetActive(false);
+    }
+
+    public void CloseSettings()
+    {
+        settingsPanel.SetActive(false);
+        pauseMenuUI.SetActive(true);
+    }
 
 }
