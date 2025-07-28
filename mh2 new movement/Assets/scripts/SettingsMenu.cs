@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using ParkourFPS;
+using TMPro;
+using Menu;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -20,6 +22,7 @@ public class SettingsMenu : MonoBehaviour
 
     private Button currentListeningButton;
     private Action<KeyCode> onKeyRebind;
+
 
     void Start()
     {
@@ -42,22 +45,23 @@ public class SettingsMenu : MonoBehaviour
         // Show correct key names on the buttons
         UpdateButtonLabels();
     }
-
-    void OnGUI()
+    void Update()
     {
-        if (currentListeningButton != null && Event.current.isKey)
+        if (currentListeningButton != null)
         {
-            KeyCode newKey = Event.current.keyCode;
-            if (newKey != KeyCode.None)
+            foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
             {
-                onKeyRebind?.Invoke(newKey);
-                SetButtonText(currentListeningButton, newKey.ToString());
-                currentListeningButton = null;
-                onKeyRebind = null;
+                if (Input.GetKeyDown(keyCode))
+                {
+                    onKeyRebind?.Invoke(keyCode);
+                    SetButtonText(currentListeningButton, keyCode.ToString());
+                    currentListeningButton = null;
+                    onKeyRebind = null;
+                    break;
+                }
             }
         }
     }
-
     private void StartRebinding(Button button, Action<KeyCode> onRebind)
     {
         currentListeningButton = button;
@@ -67,7 +71,7 @@ public class SettingsMenu : MonoBehaviour
 
     private void SetButtonText(Button button, string text)
     {
-        Text buttonText = button.GetComponentInChildren<Text>();
+        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
         if (buttonText != null)
             buttonText.text = text;
     }
@@ -115,5 +119,11 @@ public class SettingsMenu : MonoBehaviour
         SetButtonText(backwardRebindButton, b.backwardKey.ToString());
         SetButtonText(leftRebindButton, b.leftKey.ToString());
         SetButtonText(rightRebindButton, b.rightKey.ToString());
+    }
+
+    public void BackButton()
+    {
+        Menu.settingsPanel.SetActive(false);
+        Menu.pauseMenuUI.SetActive(true);
     }
 }

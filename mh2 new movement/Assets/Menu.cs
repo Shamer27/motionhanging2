@@ -8,12 +8,13 @@ public class PauseMenu : MonoBehaviour
     public static bool GameIsPaused = false;
 
     public GameObject pauseMenuUI;
-    public GameObject settingsPanel; 
+    public GameObject settingsPanel;
     // Update is called once per frame
 
     void Start()
     {
         pauseMenuUI.SetActive(false); // 🔥 Hide the menu at game start
+        settingsPanel.SetActive(false);
         Time.timeScale = 1f;          // Ensure game is unpaused
         GameIsPaused = false;
         Cursor.lockState = CursorLockMode.Locked; // Unlock the cursor
@@ -21,25 +22,25 @@ public class PauseMenu : MonoBehaviour
     }
     void Update()
     {
-      if (Input.GetKeyDown(KeyCode.Escape))
-      {
-          if (GameIsPaused)
-          {
-              Resume();
-          }
-          else
-          {
-              Pause();
-          }
-      }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (GameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+        }
     }
 
-    public void onPlayButton ()
+    public void onPlayButton()
     {
         SceneManager.LoadScene("Level1Shaded");
     }
 
-    public void onQuitButton ()
+    public void onQuitButton()
     {
         Application.Quit();
     }
@@ -63,18 +64,22 @@ public class PauseMenu : MonoBehaviour
         // Show pause menu UI here
     }
 
-    public void QuitGame()
+    public void Settings()
     {
-        Debug.Log("Quitting game...");
+        Debug.Log("Settings Menu...");
+        pauseMenuUI.SetActive(false); // 🔥 Hide the menu at game start
+        settingsPanel.SetActive(true);
         Application.Quit();
     }
 
-    public void LoadMenu()
+    public void MainMenu()
     {
         // Load the main menu scene
         SceneManager.LoadScene("MenuBackground");
         Debug.Log("Loading Menu...");
     }
+    
+     
 
 
 

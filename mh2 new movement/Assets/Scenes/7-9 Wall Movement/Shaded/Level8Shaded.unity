@@ -309,8 +309,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -656, y: 336}
-  m_SizeDelta: {x: 350, y: 60}
+  m_AnchoredPosition: {x: -457, y: -472}
+  m_SizeDelta: {x: 185, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &50612863
 MonoBehaviour:
@@ -371,9 +371,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Resume
+      - m_Target: {fileID: 913380814}
+        m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
+        m_MethodName: SaveSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -986,7 +986,7 @@ RectTransform:
   m_GameObject: {fileID: 418885414}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0.00018501791}
-  m_LocalScale: {x: 1.7582419, y: 1.7582419, z: 1.7582419}
+  m_LocalScale: {x: 1.7582419, y: 1.4271122, z: 1.7582419}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 581918429}
@@ -995,8 +995,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -326.1017, y: -83}
-  m_SizeDelta: {x: 682.8612, y: 500}
+  m_AnchoredPosition: {x: -620, y: -8}
+  m_SizeDelta: {x: 366, y: 566.2497}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &418885416
 MonoBehaviour:
@@ -1134,8 +1134,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -656, y: 336}
-  m_SizeDelta: {x: 350, y: 60}
+  m_AnchoredPosition: {x: -778, y: -471}
+  m_SizeDelta: {x: 183, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &449910853
 MonoBehaviour:
@@ -1345,7 +1345,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1306782982}
+      - m_Target: {fileID: 913380810}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
         m_MethodName: 
         m_Mode: 1
@@ -7526,8 +7526,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1048581707}
   m_HandleRect: {fileID: 1048581706}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.909091
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7662,14 +7662,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerControllerScript: {fileID: 1725125977}
-  jumpRebindButton: {fileID: 0}
-  slideRebindButton: {fileID: 0}
-  sprintRebindButton: {fileID: 0}
-  swingRebindButton: {fileID: 0}
-  forwardRebindButton: {fileID: 0}
-  backwardRebindButton: {fileID: 0}
-  leftRebindButton: {fileID: 0}
-  rightRebindButton: {fileID: 0}
+  jumpRebindButton: {fileID: 453474236}
+  slideRebindButton: {fileID: 792003253}
+  sprintRebindButton: {fileID: 627772670}
+  swingRebindButton: {fileID: 1794242471}
+  forwardRebindButton: {fileID: 479290825}
+  backwardRebindButton: {fileID: 642715950}
+  leftRebindButton: {fileID: 2090621482}
+  rightRebindButton: {fileID: 1426974022}
   closeSettingsButton: {fileID: 449910854}
   applyButton: {fileID: 50612864}
 --- !u!1 &941373805
@@ -8496,7 +8496,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1306782987}
         m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: LoadMenu
+        m_MethodName: Settings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10604,8 +10604,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000015259, y: 0.0000038146973}
-  m_SizeDelta: {x: 0.0001, y: 0}
+  m_AnchoredPosition: {x: 0.00072587974, y: 0.00010538101}
+  m_SizeDelta: {x: -0.0022, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1477822085
 MonoBehaviour:
