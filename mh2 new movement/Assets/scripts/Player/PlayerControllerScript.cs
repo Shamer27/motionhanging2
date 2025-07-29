@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 namespace ParkourFPS
 {
     [RequireComponent(typeof(CapsuleCollider))]
@@ -24,6 +25,7 @@ namespace ParkourFPS
     public class PlayerControllerScript : MonoBehaviour
     {
         #region components
+        // public bool freezeCameraRotation = false;
         private CapsuleCollider capsuleCollider;
         private Rigidbody playerRigidbody;
         private SoundPlayer soundPlayer;
@@ -232,7 +234,7 @@ namespace ParkourFPS
             // set fov
             cameraComponent.fieldOfView = fieldOfView;
 
-            PauseMenu.GameIsPaused = false; // set game not paused
+            // menus.GameIsPaused = false; // set game not paused
 
             // set gravity
             Physics.gravity = new Vector3(0, -gravity, 0);
@@ -255,7 +257,7 @@ namespace ParkourFPS
                 staminaText.gameObject.SetActive(false); // disable stamina text
 
             // start checking if the player is grounded
-            StartCoroutine(CheckGrounded());
+            StartCoroutine(CheckGrounded());    
         }
 
         // Update is called once per frame
@@ -734,6 +736,8 @@ namespace ParkourFPS
         // set player rotation based on mouse movement
         private void SetRotation()
         {
+            if (AllMenus.GameIsPaused) return;
+            
             if (isSliding) // if sliding
             {
                 if (currentCameraLean < slideCameraLean)
