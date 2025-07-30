@@ -139,6 +139,8 @@ public class AllMenus : MonoBehaviour
             }
             else if (GameIsPaused)
             {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
                 Resume();
             }
 
