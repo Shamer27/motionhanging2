@@ -297,9 +297,15 @@ namespace ParkourFPS
             {
                 Vector3 directionToPoint = (grapplePoint - transform.position).normalized;
 
-                // Optional: only pull if not already moving toward point
-                if (Vector3.Dot(playerRigidbody.velocity.normalized, directionToPoint) < 0.95f)
-                    playerRigidbody.AddForce(directionToPoint * pullForce, ForceMode.Acceleration);
+                // Always apply a smooth pull
+                playerRigidbody.AddForce(directionToPoint * pullForce, ForceMode.Acceleration);
+
+                // Optional: forward boost from input
+                if (Input.GetKey(bindings.forwardKey))
+                {
+                    Vector3 forwardDir = Vector3.ProjectOnPlane(cameraTransform.forward, Vector3.up).normalized;
+                    playerRigidbody.AddForce(forwardDir * (pullForce * 0.5f), ForceMode.Acceleration);
+                }
             }
 
             // set speed lines
@@ -569,6 +575,8 @@ namespace ParkourFPS
                 currentGrapplePosition = gunTip.position;
                 grappleLine.positionCount = 2;
                 isSwinging = true;
+                Vector3 launchDir = (grapplePoint - transform.position).normalized;
+                playerRigidbody.AddForce(launchDir * 8f, ForceMode.VelocityChange);
             }
         }
 
