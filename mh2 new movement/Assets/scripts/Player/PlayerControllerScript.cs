@@ -234,7 +234,7 @@ namespace ParkourFPS
             // set fov
             cameraComponent.fieldOfView = fieldOfView;
 
-            // menus.GameIsPaused = false; // set game not paused
+            
 
             // set gravity
             Physics.gravity = new Vector3(0, -gravity, 0);
@@ -264,7 +264,7 @@ namespace ParkourFPS
         private void Update()
         {
             /* handle player input */
-            if (PauseMenu.GameIsPaused) return;
+            if (MenuManager.GameIsPaused) return;
 
             SetRotation(); // set player rotation
 
@@ -275,7 +275,7 @@ namespace ParkourFPS
         private void FixedUpdate()
         {
             /* handle physics changes */
-            if (PauseMenu.GameIsPaused) return;
+            if (MenuManager.GameIsPaused) return;
 
 
             // set momentum text
@@ -744,7 +744,7 @@ namespace ParkourFPS
         // set player rotation based on mouse movement
         private void SetRotation()
         {
-            if (AllMenus.GameIsPaused) return;
+            if (MenuManager.GameIsPaused) return;
             
             if (isSliding) // if sliding
             {

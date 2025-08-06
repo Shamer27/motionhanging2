@@ -6,13 +6,17 @@ using ParkourFPS;
 using TMPro;
 using System;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 
-/// <summary>
-/// Fix bug where you can't use pause menu on levels
-/// </summary>/
-public class AllMenus : MonoBehaviour
+
+public class MenuManager : MonoBehaviour
 {
-    #region Settings
+    [Header("UI Panels")]
+    public GameObject mainMenu;
+    public GameObject pauseMenu;
+    public GameObject settingsPanel;
+    public GameObject levelSelect;
+
     [Header("Settings Vars")]
     public PlayerControllerScript PlayerControllerScript;
     public Button jumpRebindButton;
@@ -29,293 +33,308 @@ public class AllMenus : MonoBehaviour
     private Button currentListeningButton;
     private Action<KeyCode> onKeyRebind;
 
-    #endregion
 
-    #region UIObjects
-    [Header("UI Objects")]
-    public GameObject pauseUI;
-    public GameObject settingsUI;
-    public GameObject mainUI;
-
+    [Header("Player")]
+    public GameObject playerController;
     public GameObject playerUI;
-    #endregion
 
-    #region Menu States
-    [Header("Menu Stats")]
-    public static bool GameIsPaused = false;
-    public static bool SettingsOpened = false;
+    [Header("Scene Names")]
+    public List<string> levelSceneNames; // Level scene names (e.g., "level1", "level2", ...)
 
-    public static bool MainMenuOpen = true;
+    public static bool GameIsPaused { get; private set; } = false;
 
-    #endregion
+    private bool inMainMenu = true;
+    private bool inSettings = false;
 
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        string currentScene = SceneManager.GetActiveScene().name;
+        ShowMainMenu();
 
-        // Show menu in all scenes except MenuBackground
-        if (currentScene != "MenuBackground")
-        {
-            mainUI.SetActive(false);
-            MainMenuOpen = false;
-            playerUI.SetActive(true);
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-        else
-        {
+        jumpRebindButton.onClick.AddListener(() => StartRebinding(jumpRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.jumpKey = key));
+        slideRebindButton.onClick.AddListener(() => StartRebinding(slideRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.slideKey = key));
+        sprintRebindButton.onClick.AddListener(() => StartRebinding(sprintRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.sprintKey = key));
+        forwardRebindButton.onClick.AddListener(() => StartRebinding(forwardRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.forwardKey = key));
+        backwardRebindButton.onClick.AddListener(() => StartRebinding(backwardRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.backwardKey = key));
+        leftRebindButton.onClick.AddListener(() => StartRebinding(leftRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.leftKey = key));
+        rightRebindButton.onClick.AddListener(() => StartRebinding(rightRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.rightKey = key));
+        swingRebindButton.onClick.AddListener(() => StartCoroutine(ListenForMouseButton()));
 
-            mainUI.SetActive(true); // on game start show the main menu
-            playerUI.SetActive(false);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-
-        pauseUI.SetActive(false);
-        settingsUI.SetActive(false);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
-
-        if (currentScene == "MenuBackground")
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        else
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-
-        //
-        // Load Conrtols
-        //
-        LoadSettings();
-
-        // Bind buttons to rebind actions
-        jumpRebindButton.onClick.AddListener(() => StartRebinding(jumpRebindButton, key => PlayerControllerScript.bindings.jumpKey = key));
-        slideRebindButton.onClick.AddListener(() => StartRebinding(slideRebindButton, key => PlayerControllerScript.bindings.slideKey = key));
-        sprintRebindButton.onClick.AddListener(() => StartRebinding(sprintRebindButton, key => PlayerControllerScript.bindings.sprintKey = key));
-        swingRebindButton.onClick.AddListener(() => StartRebinding(swingRebindButton, key => PlayerControllerScript.bindings.swingMouseKey = (int)key));
-        forwardRebindButton.onClick.AddListener(() => StartRebinding(forwardRebindButton, key => PlayerControllerScript.bindings.forwardKey = key));
-        backwardRebindButton.onClick.AddListener(() => StartRebinding(backwardRebindButton, key => PlayerControllerScript.bindings.backwardKey = key));
-        leftRebindButton.onClick.AddListener(() => StartRebinding(leftRebindButton, key => PlayerControllerScript.bindings.leftKey = key));
-        rightRebindButton.onClick.AddListener(() => StartRebinding(rightRebindButton, key => PlayerControllerScript.bindings.rightKey = key));
-        applyButton.onClick.AddListener(SaveSettings);
-
-        closeSettingsButton.onClick.AddListener(SaveSettings);
-
-        // Show correct key names on the buttons
-        UpdateButtonLabels();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-
-
-        if (currentListeningButton != null && Input.anyKeyDown)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            foreach (KeyCode keyCode in Enum.GetValues(typeof(KeyCode)))
-            {
-                if (Input.GetKeyDown(keyCode))
-                {
-                    onKeyRebind?.Invoke(keyCode);
-                    SetButtonText(currentListeningButton, keyCode.ToString());
-                    currentListeningButton = null;
-                    onKeyRebind = null;
-                    break;
-                }
-            }
-        }
+            if (inMainMenu) return;
 
-        if (Input.GetKeyDown(KeyCode.Escape) && !MainMenuOpen)
-        {
-            if (SettingsOpened)
+            if (settingsPanel.activeSelf)
             {
                 CloseSettings();
             }
             else if (GameIsPaused)
             {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                Resume();
+                ResumeGame();
             }
-
             else
             {
-                Pause();
+                PauseGame();
             }
 
+            // Block escape from being picked up twice in one frame
+            // EventSystem.current.SetSelectedGameObject(null);
         }
-        if (!MainMenuOpen && GameIsPaused)
+
+        if (onKeyRebind != null && Input.anyKeyDown)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            foreach (KeyCode key in Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKeyDown(key))
+                {
+                    onKeyRebind.Invoke(key);
+                    SetButtonText(currentListeningButton, key.ToString());
+                    currentListeningButton = null;
+                    onKeyRebind = null;
+                    UpdateButtonLabels();
+                    break;
+                }
+            }
         }
-        if (Input.GetKeyDown(KeyCode.L)) {
-            Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    // ------------------ Main Menu ------------------
+
+    public void ShowMainMenu()
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene == "MenuBackground")
+        {
+            Time.timeScale = 0f;
+            GameIsPaused = true;
+            inMainMenu = true;
+
+            mainMenu.SetActive(true);
+            pauseMenu.SetActive(false);
+            settingsPanel.SetActive(false);
+            levelSelect.SetActive(false);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            playerUI?.SetActive(false);
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            GameIsPaused = false;
+            inMainMenu = false;
+
+            mainMenu.SetActive(false);
+            pauseMenu.SetActive(false);
+            settingsPanel.SetActive(false);
+            levelSelect.SetActive(false);
+
             Cursor.visible = false;
-        }
-        if (Input.GetKeyDown(KeyCode.U)) {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
+            Cursor.lockState = CursorLockMode.Locked;
 
-    }
-
-    #region settings functions
-
-    // change keybinds based on the input
-    private void StartRebinding(Button button, Action<KeyCode> onRebind)
-    {
-        currentListeningButton = button;
-        onKeyRebind = onRebind;
-        SetButtonText(button, "Press a key...");
-    }
-
-    //sets the text of the button to what the keybind is
-    void SetButtonText(Button button, string newText)
-    {
-        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
-        if (buttonText != null)
-        {
-            buttonText.text = newText;
+            playerUI?.SetActive(true);
         }
     }
 
-    //save the keybinds
-    public void SaveSettings()
-    {
-        var bindings = PlayerControllerScript.bindings;
-
-        PlayerPrefs.SetString("JumpKey", bindings.jumpKey.ToString());
-        PlayerPrefs.SetString("SlideKey", bindings.slideKey.ToString());
-        PlayerPrefs.SetString("SprintKey", bindings.sprintKey.ToString());
-        PlayerPrefs.SetInt("SwingMouseKey", bindings.swingMouseKey);
-        PlayerPrefs.SetString("ForwardKey", bindings.forwardKey.ToString());
-        PlayerPrefs.SetString("BackwardKey", bindings.backwardKey.ToString());
-        PlayerPrefs.SetString("LeftKey", bindings.leftKey.ToString());
-        PlayerPrefs.SetString("RightKey", bindings.rightKey.ToString());
-
-        PlayerPrefs.Save();
-        Debug.Log("Settings saved.");
-    }
-
-    //load the keybind on start
-    public void LoadSettings()
-    {
-        var bindings = PlayerControllerScript.bindings;
-
-        if (PlayerPrefs.HasKey("JumpKey")) bindings.jumpKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("JumpKey"));
-        if (PlayerPrefs.HasKey("SlideKey")) bindings.slideKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("SlideKey"));
-        if (PlayerPrefs.HasKey("SprintKey")) bindings.sprintKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("SprintKey"));
-        if (PlayerPrefs.HasKey("SwingMouseKey")) bindings.swingMouseKey = PlayerPrefs.GetInt("SwingMouseKey");
-        if (PlayerPrefs.HasKey("ForwardKey")) bindings.forwardKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("ForwardKey"));
-        if (PlayerPrefs.HasKey("BackwardKey")) bindings.backwardKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("BackwardKey"));
-        if (PlayerPrefs.HasKey("LeftKey")) bindings.leftKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("LeftKey"));
-        if (PlayerPrefs.HasKey("RightKey")) bindings.rightKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("RightKey"));
-    }
-
-    //changes the text of the button if the keybind has been changed
-    private void UpdateButtonLabels()
-    {
-        var b = PlayerControllerScript.bindings;
-
-        SetButtonText(jumpRebindButton, b.jumpKey.ToString());
-        SetButtonText(slideRebindButton, b.slideKey.ToString());
-        SetButtonText(sprintRebindButton, b.sprintKey.ToString());
-        SetButtonText(swingRebindButton, $"Mouse{b.swingMouseKey}");
-        SetButtonText(forwardRebindButton, b.forwardKey.ToString());
-        SetButtonText(backwardRebindButton, b.backwardKey.ToString());
-        SetButtonText(leftRebindButton, b.leftKey.ToString());
-        SetButtonText(rightRebindButton, b.rightKey.ToString());
-    }
-
-    //button to main menu
-    public void BackButton()
-    {
-        settingsUI.SetActive(false);
-        pauseUI.SetActive(true);
-    }
-    #endregion
-
-    #region pauseMenu
-    void Pause()
-    {
-        pauseUI.SetActive(true);
-        playerUI.SetActive(false);
-        settingsUI.SetActive(false);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-        Time.timeScale = 0f;
-        SettingsOpened = false;
-        GameIsPaused = true;
-        // Show pause menu UI here
-    }
-
-    public void Resume()
-    {
-        pauseUI.SetActive(false);
-        settingsUI.SetActive(false);
-        SettingsOpened = false;
-        playerUI.SetActive(true);
-        MainMenuOpen = false;
-        Time.timeScale = 1f;
-        GameIsPaused = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-        // Hide pause menu UI here
-    }
-
-    public void Settings()
-    {
-        Debug.Log("Settings Menu...");
-        pauseUI.SetActive(false); // 🔥 Hide the menu at game start
-        playerUI.SetActive(false);
-        settingsUI.SetActive(true);
-        mainUI.SetActive(false);
-        SettingsOpened = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-
-    public void CloseSettings()
-    {
-        settingsUI.SetActive(false);
-        pauseUI.SetActive(true);
-        SettingsOpened = false;
-    }
-
-    public void Back2MainMenu()
-    {
-        // Load the main menu scene 
-        SceneManager.LoadScene("MenuBackground");
-        Debug.Log("Loading Menu...");
-        MainMenuOpen = true;
-        pauseUI.SetActive(false);
-        playerUI.SetActive(false);
-        settingsUI.SetActive(false);
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-    }
-    #endregion
-
-    #region mainMenu
-    public void onPlayButton()
+    public void PlayGame()
     {
         SceneManager.LoadScene("Level1Shaded");
-        Cursor.visible = false;
-        Resume();
-        playerUI.SetActive(true);
     }
 
-    public void onQuitButton()
+    public void LoadLevel(int index)
+    {
+        if (index < 0 || index >= levelSceneNames.Count) return;
+        
+    // Disable all UI buttons to block second input
+        DisableAllMenus();
+
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+        inMainMenu = false;
+
+        StartCoroutine(LoadSceneAndStart(index));
+    }
+
+    public void QuitGame()
     {
         Application.Quit();
     }
 
-    #endregion
+    private IEnumerator<WaitForSeconds> LoadSceneAndStart(int index)
+    {
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+        inMainMenu = false;
+
+        yield return new WaitForSeconds(0.1f); // Optional buffer
+        SceneManager.LoadScene(levelSceneNames[index]);
+    }
+
+    // ------------------ Pause Menu ------------------
+
+    public void PauseGame()
+    {
+        GameIsPaused = true;
+        Time.timeScale = 0f;
+
+        pauseMenu.SetActive(true);
+
+        // Don’t disable the player
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void ResumeGame()
+    {
+        GameIsPaused = false;
+        Time.timeScale = 1f;
+
+        pauseMenu.SetActive(false);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
+
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("MenuBackground");
+        ShowMainMenu();
+    }
+
+    // ------------------ Settings ------------------
+
+    public void OpenSettings()
+    {
+        StartCoroutine(OpenSettingsWithDelay());
+    }
+
+    private IEnumerator OpenSettingsWithDelay()
+    {
+        // Force UI reset
+        EventSystem.current.SetSelectedGameObject(null);
+        yield return null; // Wait 1 frame to flush UI input
+
+        DisableAllMenus();
+        settingsPanel.SetActive(true);
+        inSettings = true;
+    }
+
+
+
+    public void CloseSettings()
+    {
+        if (!settingsPanel.activeSelf) return; // prevent double close
+
+        settingsPanel.SetActive(false);
+        inSettings = false;
+
+        if (inMainMenu)
+            mainMenu.SetActive(true);
+        else
+            pauseMenu.SetActive(true);
+    }
+
+    public void ShowLevelSelect()
+    {
+        levelSelect.SetActive(true);
+        mainMenu.SetActive(false);
+    }
+
+    public void closeLevelSelect()
+    {
+        levelSelect.SetActive(false);
+        mainMenu.SetActive(true);
+    }
+
+    private void DisableAllMenus()
+    {
+        mainMenu.SetActive(false);
+        pauseMenu.SetActive(false);
+        settingsPanel.SetActive(false);
+        levelSelect.SetActive(false);
+    }
+
+    // ------------------ Key Rebinding ------------------
+    private void StartRebinding(Button button, Action<KeyCode> onRebind)
+        {
+            currentListeningButton = button;
+            onKeyRebind = onRebind;
+            SetButtonText(button, "Press a key...");
+        }
+
+        private IEnumerator ListenForMouseButton()
+        {
+            SetButtonText(swingRebindButton, "Click a mouse button...");
+            yield return null;
+
+            while (!Input.GetMouseButtonDown(0) && !Input.GetMouseButtonDown(1) && !Input.GetMouseButtonDown(2))
+                yield return null;
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (Input.GetMouseButtonDown(i))
+                {
+                    playerController.GetComponent<PlayerControllerScript>().bindings.swingMouseKey = i;
+                    SetButtonText(swingRebindButton, $"Mouse{i}");
+                    break;
+                }
+            }
+        }
+
+        private void SetButtonText(Button button, string newText)
+        {
+            TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+            if (buttonText != null)
+                buttonText.text = newText;
+        }
+
+        private void UpdateButtonLabels()
+        {
+            var b = playerController.GetComponent<PlayerControllerScript>().bindings;
+
+            SetButtonText(jumpRebindButton, b.jumpKey.ToString());
+            SetButtonText(slideRebindButton, b.slideKey.ToString());
+            SetButtonText(sprintRebindButton, b.sprintKey.ToString());
+            SetButtonText(swingRebindButton, $"Mouse{b.swingMouseKey}");
+            SetButtonText(forwardRebindButton, b.forwardKey.ToString());
+            SetButtonText(backwardRebindButton, b.backwardKey.ToString());
+            SetButtonText(leftRebindButton, b.leftKey.ToString());
+            SetButtonText(rightRebindButton, b.rightKey.ToString());
+        }
+
+        public void SaveSettings()
+        {
+            var bindings = playerController.GetComponent<PlayerControllerScript>().bindings;
+
+            PlayerPrefs.SetString("JumpKey", bindings.jumpKey.ToString());
+            PlayerPrefs.SetString("SlideKey", bindings.slideKey.ToString());
+            PlayerPrefs.SetString("SprintKey", bindings.sprintKey.ToString());
+            PlayerPrefs.SetInt("SwingMouseKey", bindings.swingMouseKey);
+            PlayerPrefs.SetString("ForwardKey", bindings.forwardKey.ToString());
+            PlayerPrefs.SetString("BackwardKey", bindings.backwardKey.ToString());
+            PlayerPrefs.SetString("LeftKey", bindings.leftKey.ToString());
+            PlayerPrefs.SetString("RightKey", bindings.rightKey.ToString());
+
+            PlayerPrefs.Save();
+        }
+
+        public void LoadSettings()
+        {
+            var bindings = playerController.GetComponent<PlayerControllerScript>().bindings;
+
+            if (PlayerPrefs.HasKey("JumpKey")) bindings.jumpKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("JumpKey"));
+            if (PlayerPrefs.HasKey("SlideKey")) bindings.slideKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("SlideKey"));
+            if (PlayerPrefs.HasKey("SprintKey")) bindings.sprintKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("SprintKey"));
+            if (PlayerPrefs.HasKey("SwingMouseKey")) bindings.swingMouseKey = PlayerPrefs.GetInt("SwingMouseKey");
+            if (PlayerPrefs.HasKey("ForwardKey")) bindings.forwardKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("ForwardKey"));
+            if (PlayerPrefs.HasKey("BackwardKey")) bindings.backwardKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("BackwardKey"));
+            if (PlayerPrefs.HasKey("LeftKey")) bindings.leftKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("LeftKey"));
+            if (PlayerPrefs.HasKey("RightKey")) bindings.rightKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("RightKey"));
+        }
+
 }
