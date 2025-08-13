@@ -33,6 +33,14 @@ public class MenuManager : MonoBehaviour
     private Button currentListeningButton;
     private Action<KeyCode> onKeyRebind;
 
+    [Header("Sensitivity")]
+    public Slider sensitivitySlider;
+    public TMP_InputField sensitivityInput;
+
+    [Header("Audio")]
+    public Slider musicVolumeSlider;
+    public TMP_InputField musicVolumeInput;
+    public AudioManager audioManager;
 
     [Header("Player")]
     public GameObject playerController;
@@ -50,6 +58,7 @@ public class MenuManager : MonoBehaviour
     {
         ShowMainMenu();
 
+        // Keybind listeners
         jumpRebindButton.onClick.AddListener(() => StartRebinding(jumpRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.jumpKey = key));
         slideRebindButton.onClick.AddListener(() => StartRebinding(slideRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.slideKey = key));
         sprintRebindButton.onClick.AddListener(() => StartRebinding(sprintRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.sprintKey = key));
@@ -59,10 +68,74 @@ public class MenuManager : MonoBehaviour
         rightRebindButton.onClick.AddListener(() => StartRebinding(rightRebindButton, (key) => playerController.GetComponent<PlayerControllerScript>().bindings.rightKey = key));
         swingRebindButton.onClick.AddListener(() => StartCoroutine(ListenForMouseButton()));
 
-    }
+        UpdateButtonLabels();
 
+        // Sensitivity setup
+        var player = playerController.GetComponent<PlayerControllerScript>();
+        sensitivitySlider.value = player.lookSensitivity;
+        sensitivityInput.text = player.lookSensitivity.ToString("F2");
+
+        sensitivitySlider.onValueChanged.AddListener((value) =>
+        {
+            value = Mathf.Round(value * 100f) / 100f;
+            player.lookSensitivity = value;
+            sensitivityInput.text = value.ToString("F2");
+        });
+
+        sensitivityInput.onEndEdit.AddListener((string text) =>
+        {
+            if (float.TryParse(text, out float value))
+            {
+                value = Mathf.Clamp(Mathf.Round(value * 100f) / 100f, sensitivitySlider.minValue, sensitivitySlider.maxValue);
+                player.lookSensitivity = value;
+                sensitivitySlider.value = value;
+            }
+            else
+            {
+                sensitivityInput.text = player.lookSensitivity.ToString("F2");
+            }
+        });
+
+        // Music volume setup
+        if (audioManager != null && audioManager.audioSource != null)
+        {
+            float initialVolume = PlayerPrefs.HasKey("MusicVolume")
+                ? PlayerPrefs.GetFloat("MusicVolume")
+                : audioManager.audioSource.volume;
+
+            audioManager.audioSource.volume = initialVolume;
+            musicVolumeSlider.value = initialVolume;
+            musicVolumeInput.text = initialVolume.ToString("F2");
+
+            musicVolumeSlider.onValueChanged.AddListener((value) =>
+            {
+                value = Mathf.Round(value * 100f) / 100f;
+                audioManager.audioSource.volume = value;
+                musicVolumeInput.text = value.ToString("F2");
+            });
+
+            musicVolumeInput.onEndEdit.AddListener((string text) =>
+            {
+                if (float.TryParse(text, out float value))
+                {
+                    value = Mathf.Clamp(Mathf.Round(value * 100f) / 100f, musicVolumeSlider.minValue, musicVolumeSlider.maxValue);
+                    audioManager.audioSource.volume = value;
+                    musicVolumeSlider.value = value;
+                }
+                else
+                {
+                    musicVolumeInput.text = audioManager.audioSource.volume.ToString("F2");
+                }
+            });
+        } // ✅ Closed this brace
+    }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (inMainMenu) return;
@@ -79,9 +152,6 @@ public class MenuManager : MonoBehaviour
             {
                 PauseGame();
             }
-
-            // Block escape from being picked up twice in one frame
-            // EventSystem.current.SetSelectedGameObject(null);
         }
 
         if (onKeyRebind != null && Input.anyKeyDown)
@@ -90,15 +160,19 @@ public class MenuManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(key))
                 {
-                    onKeyRebind.Invoke(key);
-                    SetButtonText(currentListeningButton, key.ToString());
-                    currentListeningButton = null;
-                    onKeyRebind = null;
-                    UpdateButtonLabels();
+                    FinishRebind(key);
                     break;
                 }
             }
         }
+
+
+        if (audioManager == null)
+        {
+            // Try to find the AudioManager if it wasn't assigned in the inspector
+            audioManager = FindObjectOfType<AudioManager>();
+        }
+        
     }
 
     // ------------------ Main Menu ------------------
@@ -138,6 +212,8 @@ public class MenuManager : MonoBehaviour
 
             playerUI?.SetActive(true);
         }
+
+        
     }
 
     public void PlayGame()
@@ -320,6 +396,12 @@ public class MenuManager : MonoBehaviour
             PlayerPrefs.SetString("LeftKey", bindings.leftKey.ToString());
             PlayerPrefs.SetString("RightKey", bindings.rightKey.ToString());
 
+            PlayerPrefs.SetFloat("LookSensitivity", playerController.GetComponent<PlayerControllerScript>().lookSensitivity);
+
+            if (audioManager != null && audioManager.audioSource != null)
+                PlayerPrefs.SetFloat("MusicVolume", audioManager.audioSource.volume);
+            
+
             PlayerPrefs.Save();
         }
 
@@ -335,6 +417,27 @@ public class MenuManager : MonoBehaviour
             if (PlayerPrefs.HasKey("BackwardKey")) bindings.backwardKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("BackwardKey"));
             if (PlayerPrefs.HasKey("LeftKey")) bindings.leftKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("LeftKey"));
             if (PlayerPrefs.HasKey("RightKey")) bindings.rightKey = (KeyCode)Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("RightKey"));
+
+            if (PlayerPrefs.HasKey("LookSensitivity"))
+            {
+                playerController.GetComponent<PlayerControllerScript>().lookSensitivity = PlayerPrefs.GetFloat("LookSensitivity");
+            }
+
+            if (audioManager != null && audioManager.audioSource != null && PlayerPrefs.HasKey("MusicVolume"))
+            {
+                audioManager.audioSource.volume = PlayerPrefs.GetFloat("MusicVolume");
+            }
+                               
         }
 
-}
+        private void FinishRebind(KeyCode newKey)
+        {
+            onKeyRebind?.Invoke(newKey);
+            SetButtonText(currentListeningButton, newKey.ToString());
+            SaveSettings();
+            currentListeningButton = null;
+            onKeyRebind = null;
+        }
+
+    }
+

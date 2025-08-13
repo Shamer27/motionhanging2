@@ -29,24 +29,24 @@ public class LevelSelectUI : MonoBehaviour
 
     void Start()
     {
-        ShowBestTime("Level1Time", level1TimeText);
-        ShowBestTime("Level2Time", level2TimeText);
-        ShowBestTime("Level3Time", level3TimeText);
-        ShowBestTime("Level4Time", level4TimeText);
-        ShowBestTime("Level5Time", level5TimeText);
-        ShowBestTime("Level6Time", level6TimeText);
-        ShowBestTime("Level7Time", level7TimeText);
-        ShowBestTime("Level8Time", level8TimeText);
-        ShowBestTime("Level9Time", level9TimeText);
-        ShowBestTime("Level10Time", level10TimeText);
-        ShowBestTime("Level11Time", level11TimeText);
-        ShowBestTime("Level12Time", level12TimeText);
-        ShowBestTime("Level13Time", level13TimeText);
-        ShowBestTime("Level14Time", level14TimeText);
-        ShowBestTime("Level15Time", level15TimeText);
-        ShowBestTime("Level16Time", level16TimeText);
-        ShowBestTime("Level17Time", level17TimeText);
-        ShowBestTime("Level18Time", level18TimeText);
+        ShowBestTime("Level1Shaded", level1TimeText);
+        ShowBestTime("Level2Shaded", level2TimeText);
+        ShowBestTime("Level3Shaded", level3TimeText);
+        ShowBestTime("Level4Shaded", level4TimeText);
+        ShowBestTime("Level5Shaded", level5TimeText);
+        ShowBestTime("Level6Shaded", level6TimeText);
+        ShowBestTime("Level7Shaded", level7TimeText);
+        ShowBestTime("Level8Shaded", level8TimeText);
+        ShowBestTime("Level9Shaded", level9TimeText);
+        ShowBestTime("Level10Shaded", level10TimeText);
+        ShowBestTime("Level11Shaded", level11TimeText);
+        ShowBestTime("Level12Shaded", level12TimeText);
+        ShowBestTime("Level13Shaded", level13TimeText);
+        ShowBestTime("Level14Shaded", level14TimeText);
+        ShowBestTime("Level15Shaded", level15TimeText);
+        ShowBestTime("Level16Shaded", level16TimeText);
+        ShowBestTime("Level17Shaded", level17TimeText);
+        ShowBestTime("Level18Shaded", level18TimeText);
 
     }
 
